@@ -4,10 +4,12 @@ public interface BoardsRepository {
 
     Boards create(String decimalNumber, String name);
 
-    Boards update(String decimalNumber, String name);
+    Boards update(int id, String decimalNumber, String name);
 
-    Boards delete(String decimalNumber);
+    void remove(int id);
 
-    Boards getById(String decimalNumber);
+    Boards getById(int id);
+
+    Boards getByDecimalNumber(String decimalNumber);
 
 }

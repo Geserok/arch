@@ -1,16 +1,16 @@
 package repository;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Entity
-@Table(name = "repository")
+@Entity(name = "boards")
+@Table
 public class Boards {
     @Id
-    @Column(name = "decemalNumber")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "board_id")
+    int id;
+    @Column(name = "decimalNumber", unique = true, nullable = false)
     String decimalNumber;
 
     @Column(name = "name")
@@ -18,6 +18,10 @@ public class Boards {
 
     public String getDecimalNumber() {
         return decimalNumber;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
