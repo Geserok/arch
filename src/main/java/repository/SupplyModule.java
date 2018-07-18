@@ -3,7 +3,7 @@ package repository;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "supplyModule")
 @Table
 public class SupplyModule {
     @Id

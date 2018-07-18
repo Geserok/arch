@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class BoardsRepositoryImpl implements BoardsRepository {
+public class BoardsRepositoryImpl implements Repository {
 
     private final SessionFactory factory;
 

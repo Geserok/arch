@@ -1,21 +1,14 @@
-import repository.Boards;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import repository.BoardsRepository;
-import repository.BoardsRepositoryImpl;
 import repository.Executor;
+import repository.SupplyModule;
+import repository.SupplyModuleRepositoryImpl;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 public class App {
 
@@ -39,17 +32,35 @@ public class App {
                 .applySettings(properties)
                 .build();
 
+//        SessionFactory factory = new Configuration()
+//                .addAnnotatedClass(Boards.class)
+//                .buildSessionFactory(registry);
         SessionFactory factory = new Configuration()
-                .addAnnotatedClass(Boards.class)
+                .addAnnotatedClass(SupplyModule.class)
                 .buildSessionFactory(registry);
 
 
-        BoardsRepository repository = new BoardsRepositoryImpl(factory);
+        SupplyModuleRepositoryImpl repository = new SupplyModuleRepositoryImpl(factory);
+//            repository.create("БЕЖК01","Блок1");
+//            repository.create("БЕЖК02","Блок2");
+//            repository.create("БЕЖК03","Блок3");
+//            repository.create("БЕЖК04","Блок4");
+//            repository.create("БЕЖК05","Блок5");
 
-        String folderUrl = "D:\\Архив\\001\\469";
+
+        String folderUrl = "C:\\javaprojects\\arch\\test.xlsx";
+        String excelListName = "Лист1";
+        Map<String, String> supplyModuleMap = Executor.excelExecute(folderUrl, excelListName);
+        System.out.println(supplyModuleMap);
+        for (String key : supplyModuleMap.keySet()) {
+            SupplyModule sm = repository.getByDecimalNumber(key);
+            repository.update(sm.getId(), sm.getDecimalNumber(), supplyModuleMap.get(key));
+
+        }
+
         //Запись всех файлов в лист
-        ArrayList list = (ArrayList) Executor.execute(folderUrl);
-        list.forEach(name -> repository.create((String) name,""));
+//        ArrayList list = (ArrayList) Executor.execute(folderUrl);
+//        list.forEach(name -> repository.create((String) name,""));
 
         factory.close();
 
