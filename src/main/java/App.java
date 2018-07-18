@@ -5,11 +5,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import repository.BoardsRepository;
 import repository.BoardsRepositoryImpl;
+import repository.Executor;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -44,33 +46,10 @@ public class App {
 
         BoardsRepository repository = new BoardsRepositoryImpl(factory);
 
-            String folderUrl = "C:\\Java\\jdk-10.0.1\\bin\\dtplugin";
-            //Запись всех файлов в лист
-        List files = Files.walk(Paths.get(folderUrl))
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .collect(Collectors.toList());
-
-        Iterator iterator = files.iterator();
-        while (iterator.hasNext()) {
-            String[] splitFileName = iterator.next().toString().split("\\\\");
-            int length = splitFileName.length;
-            String nameWithType = splitFileName[length - 1];
-            String[] split = nameWithType.split("\\.");
-            String fileName = split[0];
-            Boards boards = repository.create(fileName,"");
-            System.out.println(fileName);
-        }
-//        Boards board1 = repository.create("БЕЖК01","Плата управления");
-//        Boards board2 = repository.create("БЕЖК02","Плата управления");
-//        Boards board3 = repository.create("БЕЖК03","Плата управления");
-//        Boards board4 = repository.create("БЕЖК04","Плата управления");
-//        Boards board5 = repository.create("БЕЖК05","Плата управления");
-//        Boards board6 = repository.create("БЕЖК06","Плата управления");
-//        Boards board7 = repository.getByDecimalNumber("БЕЖК03");
-//        System.out.println(board7);
-
-
+        String folderUrl = "D:\\Архив\\001\\469";
+        //Запись всех файлов в лист
+        ArrayList list = (ArrayList) Executor.execute(folderUrl);
+        list.forEach(name -> repository.create((String) name,""));
 
         factory.close();
 
