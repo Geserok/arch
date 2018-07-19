@@ -3,8 +3,8 @@ package repository;
 
 import javax.persistence.*;
 
-@Entity(name = "supplyModule")
-@Table
+@Entity
+@Table(name = "supplyModule")
 public class SupplyModule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

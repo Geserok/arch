@@ -25,7 +25,7 @@ public class App {
         properties.setProperty("hibernate.format_sql", "true");
 
 
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
 
 
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -41,20 +41,15 @@ public class App {
 
 
         SupplyModuleRepositoryImpl repository = new SupplyModuleRepositoryImpl(factory);
-//            repository.create("БЕЖК01","Блок1");
-//            repository.create("БЕЖК02","Блок2");
-//            repository.create("БЕЖК03","Блок3");
-//            repository.create("БЕЖК04","Блок4");
-//            repository.create("БЕЖК05","Блок5");
 
 
-        String folderUrl = "C:\\javaprojects\\arch\\test.xlsx";
-        String excelListName = "Лист1";
+        String folderUrl = "F:\\PersonalKAV\\Журнал.xlsx";
+        String excelListName = "2014";
         Map<String, String> supplyModuleMap = Executor.excelExecute(folderUrl, excelListName);
         System.out.println(supplyModuleMap);
         for (String key : supplyModuleMap.keySet()) {
-            SupplyModule sm = repository.getByDecimalNumber(key);
-            repository.update(sm.getId(), sm.getDecimalNumber(), supplyModuleMap.get(key));
+
+            repository.create(key, supplyModuleMap.get(key));
 
         }
 
