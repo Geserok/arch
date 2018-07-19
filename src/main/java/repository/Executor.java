@@ -60,14 +60,14 @@ public class Executor {
         Map map = new HashMap();
         try {
             File file = new File(excelUrl);
-            XSSFWorkbook book = (XSSFWorkbook) WorkbookFactory.create(file);
-            XSSFSheet sheet = book.getSheet(list);
+            Workbook book = WorkbookFactory.create(file);
+            Sheet sheet = book.getSheet(list);
 
             int rowStart = sheet.getFirstRowNum();
             int rowEnd = sheet.getLastRowNum();
 
             for (int i = rowStart; i < rowEnd; i++) {
-                XSSFRow row = sheet.getRow(i);
+                Row row = sheet.getRow(i);
                 if (row == null) {
                     continue;
                 }

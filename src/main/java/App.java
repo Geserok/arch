@@ -6,10 +6,7 @@ import org.hibernate.cfg.Configuration;
 import repository.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class App {
 
@@ -45,21 +42,23 @@ public class App {
         BoardsRepositoryImpl repository = new BoardsRepositoryImpl(factory);
 //
         String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
-//        String excelListName = "2014";
-        List<Boards> list = repository.getAll();
-        List decimalNumbers = new ArrayList();
-        for (Boards aList : list) {
-            decimalNumbers.add(aList.getDecimalNumber());
-        }
-        System.out.println(decimalNumbers);
-        Executor.excelWriter(folderUrl,decimalNumbers);
-//        Map<String, String> supplyModuleMap = Executor.excelExecute(folderUrl, excelListName);
-//        System.out.println(supplyModuleMap);
-//        for (String key : supplyModuleMap.keySet()) {
-//
-//            repository.create(key, supplyModuleMap.get(key));
-//
+
+        String excelListName = "boards";
+//        List<Boards> list = repository.getAll();
+//        List decimalNumbers = new ArrayList();
+//        for (Boards aList : list) {
+//            decimalNumbers.add(aList.getDecimalNumber());
 //        }
+//        System.out.println(decimalNumbers);
+//        Executor.excelWriter(folderUrl,decimalNumbers);
+
+        Map<String, String> boardsMap = Executor.excelExecute(folderUrl, excelListName);
+        System.out.println(boardsMap);
+        for (String key : boardsMap.keySet()) {
+            Boards boards = repository.getByDecimalNumber(key);
+            repository.update(boards.getId(),key, boardsMap.get(key));
+
+        }
 
         //Запись всех файлов в лист
 //                String folderUrl = "D:\\Архив\\001\\469";
