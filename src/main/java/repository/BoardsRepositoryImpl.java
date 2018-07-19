@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class BoardsRepositoryImpl implements Repository {
 
     private final SessionFactory factory;
@@ -68,6 +70,16 @@ public class BoardsRepositoryImpl implements Repository {
                     .getSingleResult();
             tr.commit();
             return board;
+        }
+    }
+
+    @Override
+    public List getAll() {
+        try (Session session = factory.openSession()) {
+            Transaction tr = session.beginTransaction();
+            List list = session.createQuery("FROM boards").getResultList();
+            tr.commit();
+            return list;
         }
     }
 }

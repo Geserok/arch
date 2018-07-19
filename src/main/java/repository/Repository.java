@@ -1,5 +1,7 @@
 package repository;
 
+import java.util.List;
+
 public interface Repository {
 
     Object create(String decimalNumber, String name);
@@ -12,4 +14,5 @@ public interface Repository {
 
     Object getByDecimalNumber(String decimalNumber);
 
+    List getAll();
 }

@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class SupplyModuleRepositoryImpl implements Repository {
     private final SessionFactory factory;
 
@@ -62,4 +64,9 @@ public class SupplyModuleRepositoryImpl implements Repository {
             tr.commit();
             return supplyModule;
         }    }
+
+    @Override
+    public List getAll() {
+        return null;
+    }
 }

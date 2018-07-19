@@ -1,13 +1,15 @@
 package repository;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -87,6 +89,21 @@ public class Executor {
             e.printStackTrace();
         }
         return map;
+    }
+
+    public static void excelWriter(String excelUrl, List strings) throws IOException, InvalidFormatException {
+        File file = new File(excelUrl);
+        Workbook book = new HSSFWorkbook();
+        Sheet sheet = book.createSheet("boards");
+        for(int i = 0 ; i < strings.size() ; i++){
+            Row row = sheet.createRow(i);
+            Cell cell = row.createCell(0);
+            cell.setCellValue((String) strings.get(i));
+        }
+
+        book.write(new FileOutputStream(file));
+        book.close();
+
     }
 }
 
