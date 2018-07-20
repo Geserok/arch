@@ -58,7 +58,7 @@ public class SupplyModuleRepositoryImpl implements Repository {
     public SupplyModule getByDecimalNumber(String decimalNumber) {
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
-            SupplyModule supplyModule = (SupplyModule) session.createQuery("FROM supplyModule WHERE decimalNumber = :decimalNumber")
+            SupplyModule supplyModule = (SupplyModule) session.createQuery("FROM SupplyModule WHERE decimalNumber = :decimalNumber")
                     .setParameter("decimalNumber",decimalNumber)
                     .getSingleResult();
             tr.commit();

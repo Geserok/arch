@@ -65,7 +65,7 @@ public class BoardsRepositoryImpl implements Repository {
     public Boards getByDecimalNumber(String decimalNumber) {
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
-            Boards board = (Boards) session.createQuery("FROM boards WHERE decimalNumber = :decimalNumber")
+            Boards board = (Boards) session.createQuery("FROM Boards WHERE decimalNumber = :decimalNumber")
                     .setParameter("decimalNumber",decimalNumber)
                     .getSingleResult();
             tr.commit();
@@ -77,7 +77,7 @@ public class BoardsRepositoryImpl implements Repository {
     public List getAll() {
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
-            List list = session.createQuery("FROM boards").getResultList();
+            List list = session.createQuery("FROM Boards").getResultList();
             tr.commit();
             return list;
         }

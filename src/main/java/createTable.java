@@ -1,5 +1,4 @@
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,11 +8,11 @@ import org.hibernate.cfg.Configuration;
 import repository.*;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Properties;
 
-public class App {
-
+public class createTable {
     public static void main(String[] args) throws IOException, InvalidFormatException {
         Properties properties = new Properties();
         properties.setProperty("hibernate.connection.url",
@@ -27,7 +26,7 @@ public class App {
         properties.setProperty("hibernate.format_sql", "true");
 
 
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
 
 
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -45,31 +44,62 @@ public class App {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
-        SupplyModuleRepositoryImpl repositorySupplyModules = new SupplyModuleRepositoryImpl(factory);
-        String excelListName = "boards";
 
-        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
-        Workbook book = Executor.sheetcreator(excelListName);
-        List<Boards> list = repositoryBoards.getAll();
-        List decimalNumbers = new ArrayList();
-        for (Boards aList : list) {
-            decimalNumbers.add(aList.getDecimalNumber());
-        }
-        Executor.excelWriter(folderUrl, excelListName,decimalNumbers,1,book);
 
-        List<Boards> list2 = repositoryBoards.getAll();
-        List idNumbers = new ArrayList();
-        for (Boards aList : list2) {
-            idNumbers.add(aList.getId());
-        }
-        Executor.excelWriter(folderUrl, excelListName,idNumbers,0,book);
 
-        Executor.bookCloser(book);
 
 
         transaction.commit();
         session.close();
+//        SupplyModuleRepositoryImpl repository = new SupplyModuleRepositoryImpl(factory);
+//        BoardsRepositoryImpl repository = new BoardsRepositoryImpl(factory);
+//
+        BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
+        SupplyModuleRepositoryImpl repositorySupplyModules = new SupplyModuleRepositoryImpl(factory);
+        String excelListName = "boards";
+
+
+        String folderUrl = "D:\\Архив\\001\\469";
+
+        ArrayList list2 = (ArrayList) Executor.execute(folderUrl);
+        list2.forEach(name -> repositoryBoards.create((String) name,""));
+
+        folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
+
+        Map<String, String> boardsMap = Executor.excelExecute(folderUrl, excelListName,3,2);
+        for (String key : boardsMap.keySet()) {
+            Boards boards = repositoryBoards.getByDecimalNumber(key);
+            repositoryBoards.update(boards.getId(),key, boardsMap.get(key));
+        }
+
+
+        folderUrl = "F:\\PersonalKAV\\Журнал.xls";
+        excelListName = "2014";
+
+
+        Map<String, String> supplyModulesMap = Executor.excelExecute(folderUrl, excelListName,3,2);
+        for (String key : supplyModulesMap.keySet()) {
+            try {
+                repositorySupplyModules.create(supplyModulesMap.get(key), key);
+            }
+            catch (Exception e){
+                continue;
+            }
+        }
+
+//        List<Boards> list = repository.getAll();
+//        List decimalNumbers = new ArrayList();
+//        for (Boards aList : list) {
+//            decimalNumbers.add(aList.getDecimalNumber());
+//        }
+//        System.out.println(decimalNumbers);
+//        Executor.excelWriter(folderUrl,excelListName,decimalNumbers);
+
+        //Запись всех файлов в лист
+//                String folderUrl = "D:\\Архив\\001\\469";
+//        ArrayList list2 = (ArrayList) Executor.execute(folderUrl);
+//        list2.forEach(name -> repository.create((String) name,""));
+
         factory.close();
 
     }

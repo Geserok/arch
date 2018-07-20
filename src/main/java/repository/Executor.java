@@ -56,7 +56,8 @@ public class Executor {
         return uniqueDecimalNumbers;
     }
 
-    public static Map<String, String> excelExecute(String excelUrl, String list) {
+    public static Map<String, String> excelExecute
+            (String excelUrl, String list, int decimalColumnNumber, int searchingColumnNumber) {
         Map map = new HashMap();
         try {
             File file = new File(excelUrl);
@@ -71,14 +72,11 @@ public class Executor {
                 if (row == null) {
                     continue;
                 }
-                int decimalColumnNumber = 3;
-                int nameColumnNumber = 2;
                 try {
-                    String cellWithName = row.getCell(nameColumnNumber).toString();
+                    String cellWithName = row.getCell(searchingColumnNumber).toString();
                     String cellWithDecimal = row.getCell(decimalColumnNumber).toString();
-                    map.put(cellWithName,cellWithDecimal);
-                }
-                catch (NullPointerException e){
+                    map.put(cellWithName, cellWithDecimal);
+                } catch (NullPointerException e) {
                     continue;
                 }
             }
@@ -91,19 +89,26 @@ public class Executor {
         return map;
     }
 
-    public static void excelWriter(String excelUrl, List strings) throws IOException, InvalidFormatException {
+    public static void excelWriter(String excelUrl, String excelListName, List strings, int columnNumber, Workbook workbook) throws IOException {
         File file = new File(excelUrl);
-        Workbook book = new HSSFWorkbook();
-        Sheet sheet = book.createSheet("boards");
-        for(int i = 0 ; i < strings.size() ; i++){
+        Workbook book = workbook;
+        Sheet sheet = book.getSheet(excelListName);
+        for (int i = 0; i < strings.size(); i++) {
             Row row = sheet.createRow(i);
-            Cell cell = row.createCell(0);
-            cell.setCellValue((String) strings.get(i));
+            Cell cell = row.createCell(columnNumber);
+            cell.setCellValue(String.valueOf(strings.get(i)));
         }
-
         book.write(new FileOutputStream(file));
-        book.close();
+    }
 
+    public static Workbook sheetcreator(String excelListName) {
+        Workbook book = new HSSFWorkbook();
+        Sheet sheet = book.createSheet(excelListName);
+        return book;
+    }
+
+    public static void bookCloser(Workbook workbook) throws IOException {
+        workbook.close();
     }
 }
 
