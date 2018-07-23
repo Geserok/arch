@@ -3,14 +3,11 @@ package repository;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,11 +54,12 @@ public class Executor {
     }
 
     public static Map<String, String> excelExecute
-            (String excelUrl, String list, int decimalColumnNumber, int searchingColumnNumber) {
+            (String excelUrl, String list, int decimalColumnNumber, int searchingColumnNumber) throws IOException {
         Map map = new HashMap();
+        Workbook book = null;
         try {
             File file = new File(excelUrl);
-            Workbook book = WorkbookFactory.create(file);
+            book = WorkbookFactory.create(file);
             Sheet sheet = book.getSheet(list);
 
             int rowStart = sheet.getFirstRowNum();
@@ -81,27 +79,37 @@ public class Executor {
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
+        } finally {
+            book.close();
         }
         return map;
     }
 
-    public static void excelWriter(String excelUrl, String excelListName, List strings, int columnNumber) throws IOException {
+    public static void excelWriter(String excelUrl, String excelListName, List strings) throws IOException{
         File file = new File(excelUrl);
-       Workbook book = new HSSFWorkbook();
+        Workbook book = new HSSFWorkbook();
         Sheet sheet = book.createSheet(excelListName);
         for (int i = 0; i < strings.size(); i++) {
             Row row = sheet.createRow(i);
-            Cell cell = row.createCell(columnNumber);
-            cell.setCellValue(String.valueOf(strings.get(i)));
+            Object object = strings.get(i);
+
+            Field[] declaredFields = object.getClass().getDeclaredFields();
+            int j = 0;
+            for (Field fields : declaredFields) {
+                fields.setAccessible(true);
+                Cell cell = row.createCell(j++);
+                try {
+                    cell.setCellValue(String.valueOf(fields.get(object)));
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         book.write(new FileOutputStream(file));
         book.close();
 
     }
-
 }
 

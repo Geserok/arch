@@ -23,7 +23,7 @@ public class SupplyModule {
     String includedElements;
 
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     private Set<Boards> boardsSet;
 
     public SupplyModule() {

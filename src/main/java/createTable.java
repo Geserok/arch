@@ -49,8 +49,8 @@ public class createTable {
 
 
 
-        transaction.commit();
-        session.close();
+//        transaction.commit();
+//        session.close();
 //        SupplyModuleRepositoryImpl repository = new SupplyModuleRepositoryImpl(factory);
 //        BoardsRepositoryImpl repository = new BoardsRepositoryImpl(factory);
 //
@@ -59,33 +59,36 @@ public class createTable {
         String excelListName = "boards";
 
 
-        String folderUrl = "D:\\Архив\\001\\469";
+//        String folderUrl = "D:\\Архив\\001\\469";
+        String folderUrl = "C:\\javaprojects\\arch\\Архив\\469";
 
         ArrayList list2 = (ArrayList) Executor.execute(folderUrl);
         list2.forEach(name -> repositoryBoards.create((String) name,""));
 
-        folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
+//        folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
+        folderUrl = "C:\\javaprojects\\arch\\test.xls";
 
         Map<String, String> boardsMap = Executor.excelExecute(folderUrl, excelListName,3,2);
         for (String key : boardsMap.keySet()) {
             Boards boards = repositoryBoards.getByDecimalNumber(key);
-            repositoryBoards.update(boards.getId(),key, boardsMap.get(key));
+            repositoryBoards.update(boards.getId(),key, boardsMap.get(key),"");
         }
 
 
-        folderUrl = "F:\\PersonalKAV\\Журнал.xls";
-        excelListName = "2014";
-
-
-        Map<String, String> supplyModulesMap = Executor.excelExecute(folderUrl, excelListName,3,2);
-        for (String key : supplyModulesMap.keySet()) {
-            try {
-                repositorySupplyModules.create(supplyModulesMap.get(key), key);
-            }
-            catch (Exception e){
-                continue;
-            }
-        }
+//        folderUrl = "F:\\PersonalKAV\\Журнал.xls";
+//        folderUrl = "C:\\javaprojects\\arch\\Журнал.xls";
+//        excelListName = "2014";
+//
+//
+//        Map<String, String> supplyModulesMap = Executor.excelExecute(folderUrl, excelListName,3,2);
+//        for (String key : supplyModulesMap.keySet()) {
+//            try {
+//                repositorySupplyModules.create(supplyModulesMap.get(key), key);
+//            }
+//            catch (NullPointerException e){
+//                continue;
+//            }
+//        }
 
 //        List<Boards> list = repository.getAll();
 //        List decimalNumbers = new ArrayList();

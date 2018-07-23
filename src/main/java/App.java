@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class App {
 
-    public static void main(String[] args) throws IOException, InvalidFormatException {
+    public static void main(String[] args) throws IOException, InvalidFormatException, NoSuchFieldException, IllegalAccessException {
         Properties properties = new Properties();
         properties.setProperty("hibernate.connection.url",
                 "jdbc:mysql://localhost:3306/arch?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false");
@@ -49,20 +49,10 @@ public class App {
         SupplyModuleRepositoryImpl repositorySupplyModules = new SupplyModuleRepositoryImpl(factory);
         String excelListName = "boards";
 
-        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
+//        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
+        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
         List<Boards> list = repositoryBoards.getAll();
-        List decimalNumbers = new ArrayList();
-        for (Boards aList : list) {
-            decimalNumbers.add(aList.getDecimalNumber());
-        }
-        Executor.excelWriter(folderUrl, excelListName,decimalNumbers,1);
-
-        List<Boards> list2 = repositoryBoards.getAll();
-        List idNumbers = new ArrayList();
-        for (Boards aList : list2) {
-            idNumbers.add(aList.getId());
-        }
-        Executor.excelWriter(folderUrl, excelListName,idNumbers,0);
+        Executor.excelWriter(folderUrl, excelListName,list);
 
 
         transaction.commit();

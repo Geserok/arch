@@ -23,7 +23,7 @@ public class Boards {
     String designatedElements;
 
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "SupplyModules_Boards",
             joinColumns = @JoinColumn(name = "board_id"),
             inverseJoinColumns = @JoinColumn(name = "SupplyModule_id"))
