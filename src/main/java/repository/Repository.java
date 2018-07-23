@@ -6,7 +6,7 @@ public interface Repository {
 
     Object create(String decimalNumber, String name);
 
-    Object update(int id, String decimalNumber, String name);
+    Object update(int id, String decimalNumber, String name,String includeElements);
 
     void remove(int id);
 

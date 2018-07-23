@@ -26,13 +26,25 @@ public class SupplyModuleRepositoryImpl implements Repository {
         }
     }
 
-    public SupplyModule update(int id, String decimalNumber, String name) {
+    public SupplyModule update(int id, String decimalNumber, String name, String includeElements) {
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
             SupplyModule supplyModule = session.get(SupplyModule.class, id);
             supplyModule.setDecimalNumber(decimalNumber);
             supplyModule.setName(name);
-            session.persist(supplyModule);
+            supplyModule.setIncludedElements(includeElements);
+            session.update(supplyModule);
+            tr.commit();
+            return supplyModule;
+        }
+    }
+
+    public SupplyModule update(int id, String includeElements){
+        try (Session session = factory.openSession()) {
+            Transaction tr = session.beginTransaction();
+            SupplyModule supplyModule = session.get(SupplyModule.class, id);
+            supplyModule.setIncludedElements(includeElements);
+            session.update(supplyModule);
             tr.commit();
             return supplyModule;
         }

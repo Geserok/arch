@@ -89,26 +89,19 @@ public class Executor {
         return map;
     }
 
-    public static void excelWriter(String excelUrl, String excelListName, List strings, int columnNumber, Workbook workbook) throws IOException {
+    public static void excelWriter(String excelUrl, String excelListName, List strings, int columnNumber) throws IOException {
         File file = new File(excelUrl);
-        Workbook book = workbook;
-        Sheet sheet = book.getSheet(excelListName);
+       Workbook book = new HSSFWorkbook();
+        Sheet sheet = book.createSheet(excelListName);
         for (int i = 0; i < strings.size(); i++) {
             Row row = sheet.createRow(i);
             Cell cell = row.createCell(columnNumber);
             cell.setCellValue(String.valueOf(strings.get(i)));
         }
         book.write(new FileOutputStream(file));
+        book.close();
+
     }
 
-    public static Workbook sheetcreator(String excelListName) {
-        Workbook book = new HSSFWorkbook();
-        Sheet sheet = book.createSheet(excelListName);
-        return book;
-    }
-
-    public static void bookCloser(Workbook workbook) throws IOException {
-        workbook.close();
-    }
 }
 

@@ -50,22 +50,19 @@ public class App {
         String excelListName = "boards";
 
         String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
-        Workbook book = Executor.sheetcreator(excelListName);
         List<Boards> list = repositoryBoards.getAll();
         List decimalNumbers = new ArrayList();
         for (Boards aList : list) {
             decimalNumbers.add(aList.getDecimalNumber());
         }
-        Executor.excelWriter(folderUrl, excelListName,decimalNumbers,1,book);
+        Executor.excelWriter(folderUrl, excelListName,decimalNumbers,1);
 
         List<Boards> list2 = repositoryBoards.getAll();
         List idNumbers = new ArrayList();
         for (Boards aList : list2) {
             idNumbers.add(aList.getId());
         }
-        Executor.excelWriter(folderUrl, excelListName,idNumbers,0,book);
-
-        Executor.bookCloser(book);
+        Executor.excelWriter(folderUrl, excelListName,idNumbers,0);
 
 
         transaction.commit();

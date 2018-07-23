@@ -29,18 +29,29 @@ public class BoardsRepositoryImpl implements Repository {
     }
 
     @Override
-    public Boards update(int id, String decimalNumber, String name) {
+    public Boards update(int id, String decimalNumber, String name, String designatedElements) {
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
             Boards board = session.get(Boards.class, id);
             board.setDecimalNumber(decimalNumber);
             board.setName(name);
-            session.persist(board);
+            board.setDesignatedElements(designatedElements);
+            session.update(board);
             tr.commit();
             return board;
         }
     }
 
+    public Boards update(int id, String designatedElements){
+        try (Session session = factory.openSession()) {
+            Transaction tr = session.beginTransaction();
+            Boards board = session.get(Boards.class, id);
+            board.setDesignatedElements(designatedElements);
+            session.update(board);
+            tr.commit();
+            return board;
+        }
+    }
     @Override
     public void remove(int id) {
         try (Session session = factory.openSession()) {
