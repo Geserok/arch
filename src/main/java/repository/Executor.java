@@ -23,43 +23,38 @@ public class Executor {
                 .map(Path::toFile)
                 .collect(Collectors.toList());
         List decimalNumbers = new ArrayList();
-        Iterator iterator = files.iterator();
-        while (iterator.hasNext()) {
-            String[] splitFileName = iterator.next().toString().split("\\\\");
+        for (Object file : files) {
+            String[] splitFileName = file.toString().split("\\\\");
             int length = splitFileName.length;
             String nameWithType = splitFileName[length - 1];
             String[] split = nameWithType.split("\\.");
             String fileName = split[0];
             char[] fileNameByLetters = fileName.toCharArray();
-            String name = "";
+            StringBuilder name = new StringBuilder();
             for (int i = 0; i < 6; i++) {
                 try {
-                    name += fileNameByLetters[i];
+                    name.append(fileNameByLetters[i]);
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println(fileName);
                 }
             }
             if (fileNameByLetters.length > 7) {
                 if (fileNameByLetters[6] == '-') {
-                    name += fileNameByLetters[6];
-                    name += fileNameByLetters[7];
-                    name += fileNameByLetters[8];
+                    name.append(fileNameByLetters[6]);
+                    name.append(fileNameByLetters[7]);
+                    name.append(fileNameByLetters[8]);
                 }
             }
-            decimalNumbers.add(name);
+            decimalNumbers.add(name.toString());
         }
-        ArrayList uniqueDecimalNumbers = (ArrayList) decimalNumbers.stream().distinct().collect(Collectors.toList());
-
-        return uniqueDecimalNumbers;
+        return (ArrayList) decimalNumbers.stream().distinct().collect(Collectors.toList());
     }
 
-    public static Map<String, String> excelExecute
+    public static Map excelExecute
             (String excelUrl, String list, int decimalColumnNumber, int searchingColumnNumber) throws IOException {
         Map map = new HashMap();
-        Workbook book = null;
-        try {
-            File file = new File(excelUrl);
-            book = WorkbookFactory.create(file);
+        File file = new File(excelUrl);
+        try (Workbook book = WorkbookFactory.create(file)) {
             Sheet sheet = book.getSheet(list);
 
             int rowStart = sheet.getFirstRowNum();
@@ -73,16 +68,13 @@ public class Executor {
                 try {
                     String cellWithName = row.getCell(searchingColumnNumber).toString();
                     String cellWithDecimal = row.getCell(decimalColumnNumber).toString();
-                    map.put(cellWithName, cellWithDecimal);
-                } catch (NullPointerException e) {
-                    continue;
+                    map.put(cellWithDecimal,cellWithName);
+                } catch (NullPointerException ignored) {
                 }
             }
 
         } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
-        } finally {
-            book.close();
         }
         return map;
     }

@@ -47,13 +47,19 @@ public class App {
 
         BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
         SupplyModuleRepositoryImpl repositorySupplyModules = new SupplyModuleRepositoryImpl(factory);
-        String excelListName = "boards";
+//        String excelListName = "boards";
 
 //        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
-        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
-        List<Boards> list = repositoryBoards.getAll();
-        Executor.excelWriter(folderUrl, excelListName,list);
+//        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
+//        List list = repositoryBoards.getAll();
+//        Executor.excelWriter(folderUrl, excelListName,list);
 
+        SupplyModule byId = repositorySupplyModules.getById(36);
+
+        String[] split = byId.getIncludedElements().split("\\*");
+        System.out.println(split[0]);
+        Boards byDecimalNumber = repositoryBoards.getByDecimalNumber(split[0].substring(3));
+        System.out.println(byDecimalNumber.getId());
 
         transaction.commit();
         session.close();

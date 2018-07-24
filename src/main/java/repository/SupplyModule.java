@@ -11,38 +11,38 @@ public class SupplyModule {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "SupplyModule_id")
-    int id;
+    private int id;
 
     @Column(name = "SupplyModuleName")
-    String name;
+    private String name;
 
     @Column(name = "decimalNumber", unique = true, nullable = false)
-    String decimalNumber;
+    private String decimalNumber;
 
     @Column(name = "includedElements")
-    String includedElements;
+    private String includedElements;
 
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Boards> boardsSet;
 
-    public SupplyModule() {
+    SupplyModule() {
         this.boardsSet = new HashSet<>();
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public void setDecimalNumber(String decimalNumber) {
+    void setDecimalNumber(String decimalNumber) {
         this.decimalNumber = decimalNumber;
     }
 
-    public void setIncludedElements(String includedElements) {
+    void setIncludedElements(String includedElements) {
         this.includedElements = includedElements;
     }
 
-    public void setBoardsSet(Set<Boards> boardsSet) {
+    void setBoardsSet(Set<Boards> boardsSet) {
         this.boardsSet = boardsSet;
     }
 

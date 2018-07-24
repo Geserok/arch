@@ -26,7 +26,7 @@ public class createTable {
         properties.setProperty("hibernate.format_sql", "true");
 
 
-        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
 
 
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -60,30 +60,31 @@ public class createTable {
 
 
 //        String folderUrl = "D:\\Архив\\001\\469";
-        String folderUrl = "C:\\javaprojects\\arch\\Архив\\469";
-
-        ArrayList list2 = (ArrayList) Executor.execute(folderUrl);
-        list2.forEach(name -> repositoryBoards.create((String) name,""));
+//        String folderUrl = "C:\\javaprojects\\arch\\Архив\\469";
+//
+//        ArrayList list2 = (ArrayList) Executor.execute(folderUrl);
+//        list2.forEach(name -> repositoryBoards.create((String) name,""));
 
 //        folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
-        folderUrl = "C:\\javaprojects\\arch\\test.xls";
-
-        Map<String, String> boardsMap = Executor.excelExecute(folderUrl, excelListName,3,2);
-        for (String key : boardsMap.keySet()) {
-            Boards boards = repositoryBoards.getByDecimalNumber(key);
-            repositoryBoards.update(boards.getId(),key, boardsMap.get(key),"");
-        }
+//        folderUrl = "C:\\javaprojects\\arch\\test.xls";
+//
+//        Map<String, String> boardsMap = Executor.excelExecute(folderUrl, excelListName,3,2);
+//        for (String key : boardsMap.keySet()) {
+//            Boards boards = repositoryBoards.getByDecimalNumber(key);
+//            repositoryBoards.update(boards.getId(),key, boardsMap.get(key),"");
+//        }
 
 
 //        folderUrl = "F:\\PersonalKAV\\Журнал.xls";
-//        folderUrl = "C:\\javaprojects\\arch\\Журнал.xls";
-//        excelListName = "2014";
+        String folderUrl = "C:\\javaprojects\\arch\\SupplyModule.xls";
+        excelListName = "SupplyModules";
 //
 //
-//        Map<String, String> supplyModulesMap = Executor.excelExecute(folderUrl, excelListName,3,2);
+//        Map<String, String> supplyModulesMap = Executor.excelExecute(folderUrl, excelListName,2,3);
 //        for (String key : supplyModulesMap.keySet()) {
 //            try {
-//                repositorySupplyModules.create(supplyModulesMap.get(key), key);
+//                SupplyModule supplyModule = repositorySupplyModules.getByDecimalNumber(key);
+//                repositorySupplyModules.update(supplyModule.getId(),supplyModulesMap.get(key));
 //            }
 //            catch (NullPointerException e){
 //                continue;
