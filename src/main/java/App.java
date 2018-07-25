@@ -1,3 +1,4 @@
+import openers.FileOpener;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.hibernate.Session;
@@ -8,8 +9,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import repository.*;
 
+import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class App {
@@ -53,13 +59,30 @@ public class App {
 //        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
 //        List list = repositoryBoards.getAll();
 //        Executor.excelWriter(folderUrl, excelListName,list);
+        String excelListName = "SupplyModules";
 
-        SupplyModule byId = repositorySupplyModules.getById(36);
+        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
+//        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
+        List list = repositorySupplyModules.getAll();
+//        Executor.excelWriter(folderUrl, excelListName, list);
 
-        String[] split = byId.getIncludedElements().split("\\*");
-        System.out.println(split[0]);
-        Boards byDecimalNumber = repositoryBoards.getByDecimalNumber(split[0].substring(3));
-        System.out.println(byDecimalNumber.getId());
+
+//        System.out.println("Введите id");
+//        Scanner in = new Scanner(System.in);
+//        int searchid = in.nextInt();
+//        SupplyModule byId = repositorySupplyModules.getById(searchid);
+
+//        String[] split = byId.getIncludedElements().split("\\*");
+//        for (String string: split) {
+//
+//            Boards byDecimalNumber = repositoryBoards.getByDecimalNumber(string.substring(3));
+//            System.out.println(string+ " , " + byDecimalNumber.getName() + " , " + byDecimalNumber.getId());
+//        }
+//       FileOpener.schOpener(split[0]);
+//       FileOpener.schOpener("469139018");
+//       FileOpener.peOpener("469139018");
+//       FileOpener.sbDwgOpener("469139018");
+       FileOpener.dwgOpener("469139018");
 
         transaction.commit();
         session.close();

@@ -79,6 +79,10 @@ public class SupplyModuleRepositoryImpl implements Repository {
 
     @Override
     public List getAll() {
-        return null;
-    }
+        try (Session session = factory.openSession()) {
+            Transaction tr = session.beginTransaction();
+            List list = session.createQuery("FROM SupplyModule").getResultList();
+            tr.commit();
+            return list;
+        }    }
 }

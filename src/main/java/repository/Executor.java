@@ -50,6 +50,23 @@ public class Executor {
         return (ArrayList) decimalNumbers.stream().distinct().collect(Collectors.toList());
     }
 
+    public static List<String> filesExecute(String folderUrl) throws IOException {
+
+        List files = Files.walk(Paths.get(folderUrl))
+                .filter(Files::isRegularFile)
+                .map(Path::toFile)
+                .collect(Collectors.toList());
+        List<String> decimalNumbers = new ArrayList();
+        for (Object file : files) {
+            String[] splitFileName = file.toString().split("\\\\");
+            int length = splitFileName.length;
+            String nameWithType = file.toString();
+            decimalNumbers.add(nameWithType);
+            }
+        return decimalNumbers;
+    }
+
+
     public static Map excelExecute
             (String excelUrl, String list, int decimalColumnNumber, int searchingColumnNumber) throws IOException {
         Map map = new HashMap();

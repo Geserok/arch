@@ -76,20 +76,20 @@ public class createTable {
 
 
 //        folderUrl = "F:\\PersonalKAV\\Журнал.xls";
-        String folderUrl = "C:\\javaprojects\\arch\\SupplyModule.xls";
+        String folderUrl = "F:\\PersonalKAV\\arch\\SupplyModule.xls";
         excelListName = "SupplyModules";
 //
-//
-//        Map<String, String> supplyModulesMap = Executor.excelExecute(folderUrl, excelListName,2,3);
-//        for (String key : supplyModulesMap.keySet()) {
-//            try {
-//                SupplyModule supplyModule = repositorySupplyModules.getByDecimalNumber(key);
-//                repositorySupplyModules.update(supplyModule.getId(),supplyModulesMap.get(key));
-//            }
-//            catch (NullPointerException e){
-//                continue;
-//            }
-//        }
+
+        Map<String, String> supplyModulesMap = Executor.excelExecute(folderUrl, excelListName,2,3);
+        for (String key : supplyModulesMap.keySet()) {
+            try {
+                SupplyModule supplyModule = repositorySupplyModules.getByDecimalNumber(key);
+                repositorySupplyModules.update(supplyModule.getId(),supplyModulesMap.get(key));
+            }
+            catch (NullPointerException e){
+                continue;
+            }
+        }
 
 //        List<Boards> list = repository.getAll();
 //        List decimalNumbers = new ArrayList();
