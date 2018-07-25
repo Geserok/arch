@@ -59,30 +59,28 @@ public class App {
 //        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
 //        List list = repositoryBoards.getAll();
 //        Executor.excelWriter(folderUrl, excelListName,list);
-        String excelListName = "SupplyModules";
+//        String excelListName = "SupplyModules";
 
-        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
+//        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
 //        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
-        List list = repositorySupplyModules.getAll();
+//        List list = repositorySupplyModules.getAll();
 //        Executor.excelWriter(folderUrl, excelListName, list);
 
 
-//        System.out.println("Введите id");
-//        Scanner in = new Scanner(System.in);
-//        int searchid = in.nextInt();
-//        SupplyModule byId = repositorySupplyModules.getById(searchid);
+//       FileOpener.includeElementsMenu(factory);
+       FileOpener.schOpener("469139192");
 
-//        String[] split = byId.getIncludedElements().split("\\*");
-//        for (String string: split) {
-//
-//            Boards byDecimalNumber = repositoryBoards.getByDecimalNumber(string.substring(3));
-//            System.out.println(string+ " , " + byDecimalNumber.getName() + " , " + byDecimalNumber.getId());
-//        }
+
+
+
 //       FileOpener.schOpener(split[0]);
+
+
+
 //       FileOpener.schOpener("469139018");
 //       FileOpener.peOpener("469139018");
 //       FileOpener.sbDwgOpener("469139018");
-       FileOpener.dwgOpener("469139018");
+//       FileOpener.dwgOpener("469139018");
 
         transaction.commit();
         session.close();
