@@ -9,6 +9,8 @@ import org.hibernate.cfg.Configuration;
 import repository.*;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +18,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-public class App {
+import static gui.AutoCompletion.createAndShowGUI;
+
+public class App{
 
     public static void main(String[] args) throws IOException, InvalidFormatException, NoSuchFieldException, IllegalAccessException {
         Properties properties = new Properties();
@@ -54,32 +58,29 @@ public class App {
 
 //        FileOpener.includeElementsMenu(factory);
 
+
         JFrame frame = new JFrame("First panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(3, 1));
 
 
 
-        JTextField textField = new JTextField(200);
-        textField.setEditable(false);
 
-        JComboBox comboBox = new JComboBox();
+
+
         List elements = Items.elements(factory);
-        for (Object el : elements) {
-            comboBox.addItem(el);
-        }
-        comboBox.setEditable(true);
-        comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textField.setText(String.valueOf(comboBox.getSelectedItem()));
-            }
-        });
+
+        JComboBox comboBox = createAndShowGUI(elements);
 
 
         JButton button = new JButton("Search");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-        frame.add(textField);
+            }
+        });
+
         frame.add(comboBox);
         frame.add(button);
 
