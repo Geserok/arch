@@ -53,7 +53,7 @@ public class FileOpener {
         String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("e3") && st.contains("sch")) {
+            if (st.contains(decimalNumber.substring(3)) && (st.contains("e3") || st.contains("е3")) && st.contains("sch")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                 }
@@ -71,7 +71,7 @@ public class FileOpener {
         String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("pe3") && (st.contains("rtf") || st.contains("doc"))) {
+            if (st.contains(decimalNumber.substring(3)) && (st.contains("pe3") || st.contains("ре3")) && (st.contains("rtf") || st.contains("doc"))) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                 }

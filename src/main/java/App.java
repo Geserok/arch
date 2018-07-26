@@ -1,6 +1,5 @@
-import openers.FileOpener;
+import gui.Items;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,14 +8,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import repository.*;
 
+import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedInputStream;
-import java.io.File;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class App {
 
@@ -53,34 +51,42 @@ public class App {
 
         BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
         SupplyModuleRepositoryImpl repositorySupplyModules = new SupplyModuleRepositoryImpl(factory);
-//        String excelListName = "boards";
 
-//        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
-//        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
-//        List list = repositoryBoards.getAll();
-//        Executor.excelWriter(folderUrl, excelListName,list);
-//        String excelListName = "SupplyModules";
+//        FileOpener.includeElementsMenu(factory);
 
-//        String folderUrl = "F:\\PersonalKAV\\arch\\test.xls";
-//        String folderUrl = "C:\\javaprojects\\arch\\test.xls";
-//        List list = repositorySupplyModules.getAll();
-//        Executor.excelWriter(folderUrl, excelListName, list);
+        JFrame frame = new JFrame("First panel");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(3,1));
+
+        JTextField textField = new JTextField(15);
 
 
-//       FileOpener.includeElementsMenu(factory);
-       FileOpener.schOpener("469139192");
+        JComboBox comboBox = new JComboBox();
+        List elements = Items.elements(factory);
+        for (Object el: elements) {
+            comboBox.addItem(el);
+        }
+        comboBox.setEditable(true);
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textField.setText(String.valueOf(comboBox.getSelectedItem()));
+            }
+        });
+
+
+        JButton button = new JButton("Search");
+
+        frame.add(textField);
+        frame.add(comboBox);
+        frame.add(button);
+
+
+        frame.setSize(600,400);
+        frame.setVisible(true);
 
 
 
-
-//       FileOpener.schOpener(split[0]);
-
-
-
-//       FileOpener.schOpener("469139018");
-//       FileOpener.peOpener("469139018");
-//       FileOpener.sbDwgOpener("469139018");
-//       FileOpener.dwgOpener("469139018");
 
         transaction.commit();
         session.close();
