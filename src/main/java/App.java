@@ -56,14 +56,16 @@ public class App {
 
         JFrame frame = new JFrame("First panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(3,1));
+        frame.setLayout(new GridLayout(3, 1));
 
-        JTextField textField = new JTextField(15);
 
+
+        JTextField textField = new JTextField(200);
+        textField.setEditable(false);
 
         JComboBox comboBox = new JComboBox();
         List elements = Items.elements(factory);
-        for (Object el: elements) {
+        for (Object el : elements) {
             comboBox.addItem(el);
         }
         comboBox.setEditable(true);
@@ -82,10 +84,8 @@ public class App {
         frame.add(button);
 
 
-        frame.setSize(600,400);
+        frame.setSize(600, 400);
         frame.setVisible(true);
-
-
 
 
         transaction.commit();

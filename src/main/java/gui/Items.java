@@ -17,7 +17,7 @@ public class Items {
         List<SupplyModule> modulesAll = repositorySupplyModules.getAll();
         List<String> names = new ArrayList();
         for (SupplyModule sup: modulesAll) {
-            names.add(sup.getName());
+            names.add(sup.getName() + " (БЕЖК." + sup.getDecimalNumber() + ")");
         }
         return names;
     }

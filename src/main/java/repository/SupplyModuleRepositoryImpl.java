@@ -75,7 +75,18 @@ public class SupplyModuleRepositoryImpl implements Repository {
                     .getSingleResult();
             tr.commit();
             return supplyModule;
-        }    }
+        }
+    }
+    public SupplyModule getByName(String name) {
+        try (Session session = factory.openSession()) {
+            Transaction tr = session.beginTransaction();
+            SupplyModule supplyModule = (SupplyModule) session.createQuery("FROM SupplyModule WHERE SupplyModuleName = :name")
+                    .setParameter("name",name)
+                    .getSingleResult();
+            tr.commit();
+            return supplyModule;
+        }
+    }
 
     @Override
     public List getAll() {
