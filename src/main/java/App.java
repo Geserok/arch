@@ -63,13 +63,7 @@ public class App{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(3, 1));
 
-
-
-
-
-
         List elements = Items.elements(factory);
-
         JComboBox comboBox = createAndShowGUI(elements);
 
 
@@ -77,7 +71,7 @@ public class App{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                System.out.println(comboBox.getSelectedItem());
             }
         });
 
