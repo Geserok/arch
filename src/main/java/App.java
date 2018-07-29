@@ -1,4 +1,5 @@
 import gui.Items;
+import openers.FileOpener;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -61,8 +62,11 @@ public class App{
 
         JFrame frame = new JFrame("First panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(3, 1));
+        frame.setLayout(new BorderLayout());
 
+
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new FlowLayout());
         List elements = Items.elements(factory);
         JComboBox comboBox = createAndShowGUI(elements);
 
@@ -74,9 +78,32 @@ public class App{
                 System.out.println(comboBox.getSelectedItem());
             }
         });
+        JButton dwgButton = new JButton("Спецификация");
+        JButton pe3Button = new JButton("Перечень элементов");
+        JButton schButton = new JButton("Электрическая принципиальная схема");
+        JButton sbButton = new JButton("Сборочный чертеж");
 
-        frame.add(comboBox);
-        frame.add(button);
+        dwgButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                String decimalNumber = d.substring(0, d.length() - 1);
+
+                try {
+                    FileOpener.dwgOpener(decimalNumber.trim());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        frame.add(comboBox,BorderLayout.NORTH);
+        jPanel.add(dwgButton);
+        jPanel.add(pe3Button);
+        jPanel.add(schButton);
+        jPanel.add(sbButton);
+        frame.add(jPanel,BorderLayout.CENTER);
+        frame.add(button, BorderLayout.SOUTH);
 
 
         frame.setSize(600, 400);

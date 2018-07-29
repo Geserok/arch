@@ -13,8 +13,10 @@ import java.util.Scanner;
 public class FileOpener {
 
     public static void dwgOpener(String decimalNumber) throws IOException {
+        decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
-        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+//        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb") && !st.contains("d33")) {
