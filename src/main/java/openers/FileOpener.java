@@ -15,11 +15,33 @@ public class FileOpener {
     public static void dwgOpener(String decimalNumber) throws IOException {
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
-//        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb") && !st.contains("d33")) {
+            if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb")
+                    && !st.contains("d33") && !st.contains("gh")) {
+                if (Desktop.isDesktopSupported()) {
+                    desktop = Desktop.getDesktop();
+                }
+                try {
+                    desktop.open(new File(st));
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void gbOpener(String decimalNumber) throws IOException {
+        decimalNumber = decimalNumber.replaceAll("\\.","");
+        Desktop desktop = null;
+        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+        List<String> list = Executor.filesExecute(url);
+        for (String st : list) {
+            if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb")
+                    && !st.contains("d33") && (st.contains("gh") || st.contains("gb") || st.contains("GB"))) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                 }
@@ -33,6 +55,7 @@ public class FileOpener {
     }
 
     public static void sbDwgOpener(String decimalNumber) throws IOException {
+        decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
         String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
@@ -51,11 +74,12 @@ public class FileOpener {
     }
 
     public static void schOpener(String decimalNumber) throws IOException {
+        decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
         String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && (st.contains("e3") || st.contains("е3")) && st.contains("sch")) {
+            if (st.contains(decimalNumber.substring(3)) && st.contains("sch")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                 }
@@ -69,11 +93,32 @@ public class FileOpener {
     }
 
     public static void peOpener(String decimalNumber) throws IOException {
+        decimalNumber = decimalNumber.replaceAll("\\.","");
+
         Desktop desktop = null;
         String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && (st.contains("pe3") || st.contains("ре3")) && (st.contains("rtf") || st.contains("doc"))) {
+                if (Desktop.isDesktopSupported()) {
+                    desktop = Desktop.getDesktop();
+                }
+                try {
+                    desktop.open(new File(st));
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void tuOpener(String decimalNumber) throws IOException {
+        decimalNumber = decimalNumber.replaceAll("\\.","");
+        Desktop desktop = null;
+        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+        List<String> list = Executor.filesExecute(url);
+        for (String st : list) {
+            if (st.contains(decimalNumber.substring(3)) && st.contains("tu") && !st.contains("Lu")  && (st.contains("rtf") || st.contains("doc"))) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                 }

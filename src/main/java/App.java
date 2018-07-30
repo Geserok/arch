@@ -82,6 +82,8 @@ public class App{
         JButton pe3Button = new JButton("Перечень элементов");
         JButton schButton = new JButton("Электрическая принципиальная схема");
         JButton sbButton = new JButton("Сборочный чертеж");
+        JButton gbButton = new JButton("Габаритный чертеж");
+        JButton tuButton = new JButton("ТУ");
 
         dwgButton.addActionListener(new ActionListener() {
             @Override
@@ -97,11 +99,87 @@ public class App{
                 }
             }
         });
+        gbButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                String decimalNumber = d.substring(0, d.length() - 1);
+
+                try {
+                    FileOpener.gbOpener(decimalNumber.trim());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        pe3Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                String decimalNumber = d.substring(0, d.length() - 1);
+
+                try {
+                    FileOpener.peOpener(decimalNumber.trim());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        tuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                String decimalNumber = d.substring(0, d.length() - 1);
+
+                try {
+                    FileOpener.tuOpener(decimalNumber.trim());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        schButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                String decimalNumber = d.substring(0, d.length() - 1);
+
+                try {
+                    FileOpener.schOpener(decimalNumber.trim());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        sbButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                String decimalNumber = d.substring(0, d.length() - 1);
+
+                try {
+                    FileOpener.sbDwgOpener(decimalNumber.trim());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+
+
         frame.add(comboBox,BorderLayout.NORTH);
         jPanel.add(dwgButton);
-        jPanel.add(pe3Button);
-        jPanel.add(schButton);
         jPanel.add(sbButton);
+        jPanel.add(gbButton);
+        jPanel.add(pe3Button);
+        jPanel.add(tuButton);
+        jPanel.add(schButton);
+
         frame.add(jPanel,BorderLayout.CENTER);
         frame.add(button, BorderLayout.SOUTH);
 
