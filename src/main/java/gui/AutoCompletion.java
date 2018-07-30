@@ -188,7 +188,7 @@ public class AutoCompletion extends PlainDocument {
         }
         enable(comboBox);
 
-        // create and show a window containing the combo box
+        // create and show a moduleWindow containing the combo box
       return comboBox;
     }
 }
