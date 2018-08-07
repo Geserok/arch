@@ -59,33 +59,96 @@ public class Items {
         JPanel jpanelRight = new JPanel();
         jpanelRight.setLayout(new BorderLayout());
         jPanelLeft.setLayout(new GridLayout(6,1));
+
+        Box box1 = Box.createVerticalBox();
+        box1.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
         List elements = Items.elements(factory);
+
+
 
         JComboBox comboBox = createAndShowGUI(elements);
 
 
-
+//Buttons of Modules
         JButton button = new JButton(">>");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JComboBox comboBoxInclude = new JComboBox();
-                String decNum = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-                jpanelRight.removeAll();
-                List includeElements = Items.includeElements(factory, decNum.substring(0, decNum.length() - 1));
-                comboBoxInclude = createAndShowGUI(includeElements);
-                jpanelRight.add(comboBoxInclude,BorderLayout.NORTH);
-                frame.setSize(700,400);
-                jpanelRight.revalidate();
-                frame.invalidate();
-            }
-            });
         JButton dwgButton = new JButton("Спецификация");
         JButton pe3Button = new JButton("Перечень элементов");
         JButton schButton = new JButton("Электрическая принципиальная схема");
         JButton sbButton = new JButton("Сборочный чертеж");
         JButton gbButton = new JButton("Габаритный чертеж");
         JButton tuButton = new JButton("ТУ");
+
+
+
+
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jpanelRight.removeAll();
+                box1.removeAll();
+                JButton pe3BoardButton = new JButton("Перечень элементов");
+                JButton schBoardButton = new JButton("Электрическая принципиальная схема");
+                JButton sbBoardButton = new JButton("Сборочный чертеж");
+
+                box1.add(pe3BoardButton);
+                box1.add(schBoardButton);
+                box1.add(sbBoardButton);
+                JComboBox comboBoxInclude;
+                String decNum = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                List includeElements = Items.includeElements(factory, decNum.substring(0, decNum.length() - 1));
+                comboBoxInclude = createAndShowGUI(includeElements);
+                pe3BoardButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String d = comboBoxInclude.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                        String decimalNumber = d.substring(0, d.length() - 1);
+
+                        try {
+                            FileOpener.peOpener(decimalNumber.trim());
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                });
+                schBoardButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String d = comboBoxInclude.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                        String decimalNumber = d.substring(0, d.length() - 1);
+
+                        try {
+                            FileOpener.schOpener(decimalNumber.trim());
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                });
+                sbBoardButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String d = comboBoxInclude.getSelectedItem().toString().split("БЕЖК.")[1];
+
+                        String decimalNumber = d.substring(0, d.length() - 1);
+
+                        try {
+                            FileOpener.sbDwgOpener(decimalNumber.trim());
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                });
+                jpanelRight.add(comboBoxInclude,BorderLayout.NORTH);
+                jpanelRight.add(box1,BorderLayout.CENTER);
+                frame.setSize(700,400);
+                jpanelRight.revalidate();
+                frame.invalidate();
+            }
+        });
 
         dwgButton.addActionListener(new ActionListener() {
             @Override
