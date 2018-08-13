@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class FileOpener {
 
     public static void dwgOpener(String decimalNumber) throws IOException {
+        boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
 //        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
@@ -23,17 +24,21 @@ public class FileOpener {
                     && !st.contains("d33") && !st.contains("gh")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
+                    consistFlag = true;
                 }
                 try {
                     desktop.open(new File(st));
                 } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+                    new FileNotFound();                }
             }
+        }
+        if(consistFlag == false) {
+            new FileNotFound();
         }
     }
 
     public static void gbOpener(String decimalNumber) throws IOException {
+        boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
 //        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
@@ -44,17 +49,21 @@ public class FileOpener {
                     && !st.contains("d33") && (st.contains("gh") || st.contains("gb") || st.contains("GB"))) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
+                    consistFlag = true;
                 }
                 try {
                     desktop.open(new File(st));
                 } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+                    new FileNotFound();                }
             }
+        }
+        if(consistFlag == false) {
+            new FileNotFound();
         }
     }
 
     public static void sbDwgOpener(String decimalNumber) throws IOException {
+        boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
 //        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
@@ -64,17 +73,21 @@ public class FileOpener {
             if (st.contains(decimalNumber.substring(3)) && st.contains("sb") && st.contains("dwg")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
+                    consistFlag = true;
                 }
                 try {
                     desktop.open(new File(st));
                 } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+                    new FileNotFound();                }
             }
+        }
+        if(consistFlag == false) {
+            new FileNotFound();
         }
     }
 
     public static void schOpener(String decimalNumber) throws IOException {
+        boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
 //        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
@@ -84,17 +97,21 @@ public class FileOpener {
             if (st.contains(decimalNumber.substring(3)) && st.contains("sch")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
+                    consistFlag = true;
                 }
                 try {
                     desktop.open(new File(st));
                 } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+                    new FileNotFound();                }
             }
+        }
+        if(consistFlag == false) {
+            new FileNotFound();
         }
     }
 
     public static void peOpener(String decimalNumber) throws IOException {
+        boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
 
         Desktop desktop = null;
@@ -106,38 +123,47 @@ public class FileOpener {
             if (st.contains(decimalNumber.substring(3)) && (st.contains("pe3") || st.contains("ре3")) && (st.contains("rtf") || st.contains("doc"))) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
+                    consistFlag = true;
                 }
                 try {
                     desktop.open(new File(st));
                 } catch (IOException ioe) {
-                    ioe.printStackTrace();
+                   new FileNotFound();
                 }
             }
+        }
+        if(consistFlag == false) {
+            new FileNotFound();
         }
     }
 
     public static void tuOpener(String decimalNumber) throws IOException {
+        boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
 //        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(url);
+
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && st.contains("tu") && !st.contains("Lu")  && (st.contains("rtf") || st.contains("doc"))) {
+                consistFlag = true;
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                 }
                 try {
                     desktop.open(new File(st));
                 } catch (IOException ioe) {
-                    ioe.printStackTrace();
+                    new FileNotFound();
                 }
             }
+        }
+        if(consistFlag == false) {
+            new FileNotFound();
         }
     }
 
     public static void includeElementsMenu(SessionFactory factory) {
-
         BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
         SupplyModuleRepositoryImpl repositorySupplyModules = new SupplyModuleRepositoryImpl(factory);
         System.out.println("Введите id");
@@ -176,8 +202,7 @@ public class FileOpener {
         } catch (IndexOutOfBoundsException ex) {
 
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            new FileNotFound();        }
 
     }
 }

@@ -53,7 +53,7 @@ public class Items {
         JFrame frame = new JFrame("First panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(1,6));
-
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         JPanel jPanelLeft = new JPanel();
         JPanel jpanelRight = new JPanel();
@@ -249,7 +249,7 @@ public class Items {
 //        frame.add(jpanelRight, BorderLayout.EAST);
         JPanel pan = PanelCreator.panelCreator(factory,frame,elements);
         frame.add(pan);
-        frame.setSize(300, 400);
+        frame.setBounds((screenSize.width-300)/2,(screenSize.height-400)/2,300,400);
         frame.setVisible(true);
 //        transaction.commit();
 //        session.close();
