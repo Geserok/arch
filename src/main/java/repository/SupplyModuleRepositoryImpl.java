@@ -1,9 +1,11 @@
 package repository;
 
+import openers.FileNotFound;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class SupplyModuleRepositoryImpl implements Repository {
@@ -68,14 +70,19 @@ public class SupplyModuleRepositoryImpl implements Repository {
         }    }
 
     public SupplyModule getByDecimalNumber(String decimalNumber) {
+        SupplyModule supplyModule = new SupplyModule();
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
-            SupplyModule supplyModule = (SupplyModule) session.createQuery("FROM SupplyModule WHERE decimalNumber = :decimalNumber")
+            supplyModule = (SupplyModule) session.createQuery("FROM SupplyModule WHERE decimalNumber = :decimalNumber")
                     .setParameter("decimalNumber",decimalNumber)
                     .getSingleResult();
             tr.commit();
-            return supplyModule;
+
         }
+        catch (NoResultException nre){
+            new FileNotFound();
+        }
+        return supplyModule;
     }
     public SupplyModule getByName(String name) {
         try (Session session = factory.openSession()) {
