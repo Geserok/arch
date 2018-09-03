@@ -78,9 +78,10 @@ public class PanelCreator {
                     Container parent = button.getParent().getParent();
                     int componentZOrder = parent.getComponentZOrder(button.getParent())+1;
                     int componentCount = parent.getComponentCount();
-            for(int i = componentZOrder; i < componentCount; i++) {
-                parent.remove(i);
+            while (componentCount > componentZOrder) {
+                parent.remove(componentZOrder);
                 frame.setSize( frame.getWidth()-300,frame.getHeight());
+                componentCount--;
             }
 
 
