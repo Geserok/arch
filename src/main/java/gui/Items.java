@@ -25,28 +25,9 @@ import static gui.AutoCompletion.createAndShowGUI;
 
 public class Items {
     public static void moduleWindow() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.connection.url",
-                "jdbc:mysql://localhost:3306/arch?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false");
-        properties.setProperty("hibernate.connection.driver_class",
-                "com.mysql.cj.jdbc.Driver");
-        properties.setProperty("hibernate.connection.username", "root");
-        properties.setProperty("hibernate.connection.password", "root");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.format_sql", "true");
 
-
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-
-
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .applySettings(properties)
-                .build();
-        SessionFactory factory = new Configuration()
-                .addAnnotatedClass(Boards.class)
-                .addAnnotatedClass(SupplyModule.class)
-                .buildSessionFactory(registry);
+        Configuration configuration = new Configuration().configure();
+        SessionFactory factory = configuration.buildSessionFactory();
 
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -68,218 +49,15 @@ public class Items {
 
         List elements = Items.elements(factory);
 
-//        JComboBox comboBox = createAndShowGUI(elements);
-
-//Buttons of Modules
-//        JButton button = new JButton(">>");
-//        JButton dwgButton = new JButton("Спецификация");
-//        JButton pe3Button = new JButton("Перечень элементов");
-//        JButton schButton = new JButton("Электрическая принципиальная схема");
-//        JButton sbButton = new JButton("Сборочный чертеж");
-//        JButton gbButton = new JButton("Габаритный чертеж");
-//        JButton tuButton = new JButton("ТУ");
-//
-//        button.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                jpanelRight.removeAll();
-//                box1.removeAll();
-//                JButton pe3BoardButton = new JButton("Перечень элементов");
-//                JButton schBoardButton = new JButton("Электрическая принципиальная схема");
-//                JButton sbBoardButton = new JButton("Сборочный чертеж");
-//
-//                box1.add(pe3BoardButton);
-//                box1.add(schBoardButton);
-//                box1.add(sbBoardButton);
-//                JComboBox comboBoxInclude;
-//                String decNum = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                List includeElements = Items.includeElements(factory, decNum.substring(0, decNum.length() - 1));
-//                comboBoxInclude = createAndShowGUI(includeElements);
-//                pe3BoardButton.addActionListener(new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        String d = comboBoxInclude.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                        String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                        try {
-//                            FileOpener.peOpener(decimalNumber.trim());
-//                        } catch (IOException e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }
-//                });
-//                schBoardButton.addActionListener(new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        String d = comboBoxInclude.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                        String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                        try {
-//                            FileOpener.schOpener(decimalNumber.trim());
-//                        } catch (IOException e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }
-//                });
-//                sbBoardButton.addActionListener(new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        String d = comboBoxInclude.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                        String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                        try {
-//                            FileOpener.sbDwgOpener(decimalNumber.trim());
-//                        } catch (IOException e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }
-//                });
-//                jpanelRight.add(comboBoxInclude,BorderLayout.NORTH);
-//                jpanelRight.add(box1,BorderLayout.CENTER);
-//                frame.setSize(700,400);
-//                jpanelRight.revalidate();
-//                frame.invalidate();
-//            }
-//        });
-//        dwgButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                try {
-//                    FileOpener.dwgOpener(decimalNumber.trim());
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        gbButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                try {
-//                    FileOpener.gbOpener(decimalNumber.trim());
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        pe3Button.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                try {
-//                    FileOpener.peOpener(decimalNumber.trim());
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        tuButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                try {
-//                    FileOpener.tuOpener(decimalNumber.trim());
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        schButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                try {
-//                    FileOpener.schOpener(decimalNumber.trim());
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        sbButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-//
-//                String decimalNumber = d.substring(0, d.length() - 1);
-//
-//                try {
-//                    FileOpener.sbDwgOpener(decimalNumber.trim());
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-
-
-//        jPanelLeft.add(comboBox,BorderLayout.NORTH);
-//
-//        box.add(dwgButton);
-//        box.add(sbButton);
-//        box.add(gbButton);
-//        box.add(pe3Button);
-//        box.add(tuButton);
-//        box.add(schButton);
-//
-//        jPanelLeft.add(box,BorderLayout.CENTER);
-//        jPanelLeft.add(button,BorderLayout.EAST);
-
-
-//        frame.add(jPanelLeft, BorderLayout.WEST);
-//        frame.add(jpanelCenter, BorderLayout.CENTER);
-//        frame.add(jpanelRight, BorderLayout.EAST);
         JPanel pan = PanelCreator.panelCreator(factory,frame,elements);
         frame.add(pan);
         frame.setBounds((screenSize.width-300)/2,(screenSize.height-400)/2,300,400);
         frame.setVisible(true);
-//        transaction.commit();
-//        session.close();
-//        factory.close();
     }
 
     public static void includeElementWindow(String selectedItem) {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.connection.url",
-                "jdbc:mysql://localhost:3306/arch?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false");
-        properties.setProperty("hibernate.connection.driver_class",
-                "com.mysql.cj.jdbc.Driver");
-        properties.setProperty("hibernate.connection.username", "root");
-        properties.setProperty("hibernate.connection.password", "root");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.format_sql", "true");
-
-
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-
-
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .applySettings(properties)
-                .build();
-        SessionFactory factory = new Configuration()
-                .addAnnotatedClass(Boards.class)
-                .addAnnotatedClass(SupplyModule.class)
-                .buildSessionFactory(registry);
-
+        Configuration configuration = new Configuration().configure();
+        SessionFactory factory = configuration.buildSessionFactory();
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         JFrame frame = new JFrame("Include element panel");
@@ -426,7 +204,7 @@ public class Items {
             return names;
         }
         for (String boards : InludeBoards) {
-            if(boards.startsWith("436")){
+            if(boards.startsWith("436") || boards.startsWith("468")){
                 StringBuffer sb = new StringBuffer(boards);
                 sb.insert(6,".");
                 boards = sb.toString();
@@ -437,6 +215,7 @@ public class Items {
         }
         return names;
     }
+
 
 }
 

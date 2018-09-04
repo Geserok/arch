@@ -53,6 +53,7 @@ public class PanelCreator {
                     box.add(dwgButton);
                     box.add(pe3Button);
                     box.add(schButton);
+                    box.add(gbButton);
                     jPanelLeft.add(box,BorderLayout.CENTER);
                     jPanelLeft.revalidate();
                 }
@@ -75,9 +76,14 @@ public class PanelCreator {
                 else {
                     button.setText(">>");
                     Container parent = button.getParent().getParent();
-                    int componentZOrder = parent.getComponentZOrder(button.getParent());
-                    parent.remove(++componentZOrder);
-                    frame.setSize(frame.getWidth()-300,frame.getHeight());
+                    int componentZOrder = parent.getComponentZOrder(button.getParent())+1;
+                    int componentCount = parent.getComponentCount();
+            for(int i = componentZOrder; i < componentCount; i++) {
+                parent.remove(i);
+                frame.setSize( frame.getWidth()-300,frame.getHeight());
+            }
+
+
 
                 }
             }

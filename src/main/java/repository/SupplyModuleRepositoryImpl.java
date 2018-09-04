@@ -84,6 +84,7 @@ public class SupplyModuleRepositoryImpl implements Repository {
         }
         return supplyModule;
     }
+
     public SupplyModule getByName(String name) {
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
