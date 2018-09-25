@@ -211,7 +211,7 @@ public class Items {
                 names.add(supplyModuleRepository.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
                 continue;
             }
-            names.add(repositoryBoards.getByDecimalNumber(boards.substring(3)).getName() + " (БЕЖК." + boards + ")");
+            names.add(repositoryBoards.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
         }
         return names;
     }

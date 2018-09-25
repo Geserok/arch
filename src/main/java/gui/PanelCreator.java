@@ -53,7 +53,7 @@ public class PanelCreator {
                     box.add(dwgButton);
                     box.add(pe3Button);
                     box.add(schButton);
-                    box.add(gbButton);
+                    box.add(sbButton);
                     jPanelLeft.add(box,BorderLayout.CENTER);
                     jPanelLeft.revalidate();
                 }
@@ -66,7 +66,7 @@ public class PanelCreator {
                 if(button.isSelected()){
                     button.setText("<<");
 
-                    String decNum = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+                    String decNum = comboBox.getSelectedItem().toString().split("БЕЖК\\.")[1];
 //
                     List includeElements = Items.includeElements(factory, decNum.substring(0, decNum.length() - 1));
                     JPanel pan = PanelCreator.panelCreator(factory,frame,includeElements);
@@ -78,9 +78,10 @@ public class PanelCreator {
                     Container parent = button.getParent().getParent();
                     int componentZOrder = parent.getComponentZOrder(button.getParent())+1;
                     int componentCount = parent.getComponentCount();
-            for(int i = componentZOrder; i < componentCount; i++) {
-                parent.remove(i);
+            while (componentCount > componentZOrder) {
+                parent.remove(componentZOrder);
                 frame.setSize( frame.getWidth()-300,frame.getHeight());
+                componentCount--;
             }
 
 

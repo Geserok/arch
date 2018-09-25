@@ -11,14 +11,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileOpener {
+//    private static String url = "D:\\Архив\\001\\";
+    private static String url = "C:\\javaprojects\\arch\\Архив\\001\\";
 
     public static void dwgOpener(String decimalNumber) throws IOException {
         boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
-        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-        List<String> list = Executor.filesExecute(url);
+        String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
+        List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb")
                     && !st.contains("d33") && !st.contains("gh")) {
@@ -28,8 +29,10 @@ public class FileOpener {
                 }
                 try {
                     desktop.open(new File(st));
+                    break;
                 } catch (IOException ioe) {
-                    new FileNotFound();                }
+                    new FileNotFound();
+                }
             }
         }
         if(consistFlag == false) {
@@ -41,9 +44,8 @@ public class FileOpener {
         boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
-        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-        List<String> list = Executor.filesExecute(url);
+        String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
+        List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb")
                     && !st.contains("d33") && (st.contains("gh") || st.contains("gb") || st.contains("GB"))) {
@@ -53,6 +55,7 @@ public class FileOpener {
                 }
                 try {
                     desktop.open(new File(st));
+                    break;
                 } catch (IOException ioe) {
                     new FileNotFound();                }
             }
@@ -66,9 +69,8 @@ public class FileOpener {
         boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
-        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-        List<String> list = Executor.filesExecute(url);
+        String fullUrl = url +  decimalNumber.substring(0, 3) + "\\";
+        List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && st.contains("sb") && st.contains("dwg")) {
                 if (Desktop.isDesktopSupported()) {
@@ -77,6 +79,7 @@ public class FileOpener {
                 }
                 try {
                     desktop.open(new File(st));
+                    break;
                 } catch (IOException ioe) {
                     new FileNotFound();                }
             }
@@ -90,9 +93,8 @@ public class FileOpener {
         boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
-        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-        List<String> list = Executor.filesExecute(url);
+        String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
+        List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && st.contains("sch")) {
                 if (Desktop.isDesktopSupported()) {
@@ -101,6 +103,7 @@ public class FileOpener {
                 }
                 try {
                     desktop.open(new File(st));
+                    break;
                 } catch (IOException ioe) {
                     new FileNotFound();                }
             }
@@ -115,10 +118,9 @@ public class FileOpener {
         decimalNumber = decimalNumber.replaceAll("\\.","");
 
         Desktop desktop = null;
-        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
+        String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
 
-        List<String> list = Executor.filesExecute(url);
+        List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && (st.contains("pe3") || st.contains("ре3")) && (st.contains("rtf") || st.contains("doc"))) {
                 if (Desktop.isDesktopSupported()) {
@@ -127,6 +129,7 @@ public class FileOpener {
                 }
                 try {
                     desktop.open(new File(st));
+                    break;
                 } catch (IOException ioe) {
                    new FileNotFound();
                 }
@@ -141,9 +144,8 @@ public class FileOpener {
         boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.","");
         Desktop desktop = null;
-        String url = "D:\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-//        String url = "C:\\javaprojects\\arch\\Архив\\001\\" + decimalNumber.substring(0, 3) + "\\";
-        List<String> list = Executor.filesExecute(url);
+        String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
+        List<String> list = Executor.filesExecute(fullUrl);
 
         for (String st : list) {
             if (st.contains(decimalNumber.substring(3)) && st.contains("tu") && !st.contains("Lu")  && (st.contains("rtf") || st.contains("doc"))) {
@@ -153,6 +155,7 @@ public class FileOpener {
                 }
                 try {
                     desktop.open(new File(st));
+                    break;
                 } catch (IOException ioe) {
                     new FileNotFound();
                 }
