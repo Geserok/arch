@@ -19,8 +19,8 @@ public class Boards {
     @Column(name = "name")
     String name;
 
-    @Column(name = "designatedElements")
-    String designatedElements;
+    @Column(name = "includedElements")
+    String includedElements;
 
 
     @ManyToMany(fetch=FetchType.EAGER)
@@ -29,8 +29,8 @@ public class Boards {
             inverseJoinColumns = @JoinColumn(name = "SupplyModule_id"))
     private Set<SupplyModule> supplyModuleSet = new HashSet<>();
 
-    public String getDesignatedElements() {
-        return designatedElements;
+    public String getIncludedElements() {
+        return includedElements;
     }
 
     public String getDecimalNumber() {
@@ -45,8 +45,8 @@ public class Boards {
         return name;
     }
 
-    public void setDesignatedElements(String designatedElements) {
-        this.designatedElements = designatedElements;
+    public void setIncludedElements(String includedElements) {
+        this.includedElements = includedElements;
     }
 
     public void setDecimalNumber(String decimalNumber) {

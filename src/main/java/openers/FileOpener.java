@@ -11,8 +11,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileOpener {
-//    private static String url = "D:\\Архив\\001\\";
-    private static String url = "C:\\javaprojects\\arch\\Архив\\001\\";
+        private static String url = "D:\\Архив\\001\\";
+       // private static String url = "D:\\АРХИВ_27июля_16\\001\\";
+    //private static String url = "C:\\javaprojects\\arch\\Архив\\001\\";
 
     public static void dwgOpener(String decimalNumber) throws IOException {
         boolean consistFlag = false;
@@ -21,14 +22,15 @@ public class FileOpener {
         String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb")
-                    && !st.contains("d33") && !st.contains("gh")) {
+            String s = st.toLowerCase();
+            if (s.contains(decimalNumber.substring(3)) && s.contains("dwg") && !s.contains("sb")
+                    && !s.contains("d33") && !s.contains("gh")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                     consistFlag = true;
                 }
                 try {
-                    desktop.open(new File(st));
+                    desktop.open(new File(s));
                     break;
                 } catch (IOException ioe) {
                     new FileNotFound();
@@ -47,14 +49,15 @@ public class FileOpener {
         String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("dwg") && !st.contains("sb")
-                    && !st.contains("d33") && (st.contains("gh") || st.contains("gb") || st.contains("GB"))) {
+            String s = st.toLowerCase();
+            if (s.contains(decimalNumber.substring(3)) && s.contains("dwg") && !s.contains("sb")
+                    && !s.contains("d33") && (s.contains("gh") || s.contains("gb") || s.contains("GB"))) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                     consistFlag = true;
                 }
                 try {
-                    desktop.open(new File(st));
+                    desktop.open(new File(s));
                     break;
                 } catch (IOException ioe) {
                     new FileNotFound();                }
@@ -72,13 +75,14 @@ public class FileOpener {
         String fullUrl = url +  decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("sb") && st.contains("dwg")) {
+            String s = st.toLowerCase();
+            if (s.contains(decimalNumber.substring(3)) && s.contains("sb") && s.contains("dwg")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                     consistFlag = true;
                 }
                 try {
-                    desktop.open(new File(st));
+                    desktop.open(new File(s));
                     break;
                 } catch (IOException ioe) {
                     new FileNotFound();                }
@@ -96,13 +100,14 @@ public class FileOpener {
         String fullUrl = url + decimalNumber.substring(0, 3) + "\\";
         List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("sch")) {
+            String s = st.toLowerCase();
+            if (s.contains(decimalNumber.substring(3)) && s.contains("sch")) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                     consistFlag = true;
                 }
                 try {
-                    desktop.open(new File(st));
+                    desktop.open(new File(s));
                     break;
                 } catch (IOException ioe) {
                     new FileNotFound();                }
@@ -122,13 +127,14 @@ public class FileOpener {
 
         List<String> list = Executor.filesExecute(fullUrl);
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && (st.contains("pe3") || st.contains("ре3")) && (st.contains("rtf") || st.contains("doc"))) {
+            String s = st.toLowerCase();
+            if (s.contains(decimalNumber.substring(3)) && (s.contains("pe3") || s.contains("ре3")) && (s.contains("rtf") || s.contains("doc"))) {
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                     consistFlag = true;
                 }
                 try {
-                    desktop.open(new File(st));
+                    desktop.open(new File(s));
                     break;
                 } catch (IOException ioe) {
                    new FileNotFound();
@@ -148,13 +154,14 @@ public class FileOpener {
         List<String> list = Executor.filesExecute(fullUrl);
 
         for (String st : list) {
-            if (st.contains(decimalNumber.substring(3)) && st.contains("tu") && !st.contains("Lu")  && (st.contains("rtf") || st.contains("doc"))) {
+            String s = st.toLowerCase();
+            if (s.contains(decimalNumber.substring(3)) && s.contains("tu") && !s.contains("lu")  && (s.contains("rtf") || s.contains("doc"))) {
                 consistFlag = true;
                 if (Desktop.isDesktopSupported()) {
                     desktop = Desktop.getDesktop();
                 }
                 try {
-                    desktop.open(new File(st));
+                    desktop.open(new File(s));
                     break;
                 } catch (IOException ioe) {
                     new FileNotFound();

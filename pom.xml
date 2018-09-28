@@ -45,7 +45,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>
-                                C:\javaprojects\arch\target\lib
+                                F:\PersonalKAV\arch\target\lib
                             </outputDirectory>
                         </configuration>
                     </execution>

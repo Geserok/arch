@@ -4,8 +4,6 @@ import openers.FileOpener;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import repository.Boards;
 import repository.BoardsRepositoryImpl;
@@ -19,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import static gui.AutoCompletion.createAndShowGUI;
 
@@ -194,27 +191,53 @@ public class Items {
     }
 
     public static List includeElements(SessionFactory factory, String decimalNumber) {
-        BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
-        SupplyModuleRepositoryImpl supplyModuleRepository = new SupplyModuleRepositoryImpl(factory);
-        List<String> names = new ArrayList();
-        SupplyModule supmod = supplyModuleRepository.getByDecimalNumber(decimalNumber);
-        String[] InludeBoards = supmod.getIncludedElements().split("\\*");
-        if(InludeBoards == null){
-            names.add("Empty");
+        if(decimalNumber.startsWith("436") || decimalNumber.startsWith("468")) {
+            BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
+            SupplyModuleRepositoryImpl supplyModuleRepository = new SupplyModuleRepositoryImpl(factory);
+            List<String> names = new ArrayList();
+            SupplyModule supmod = supplyModuleRepository.getByDecimalNumber(decimalNumber);
+            String[] InludeBoards = supmod.getIncludedElements().split("\\*");
+            if (InludeBoards == null) {
+                names.add("Empty");
+                return names;
+            }
+            for (String boards : InludeBoards) {
+                if (boards.startsWith("436") || boards.startsWith("468")) {
+                    StringBuffer sb = new StringBuffer(boards);
+                    sb.insert(6, ".");
+                    boards = sb.toString();
+                    names.add(supplyModuleRepository.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
+                    continue;
+                }
+                names.add(repositoryBoards.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
+            }
             return names;
         }
-        for (String boards : InludeBoards) {
-            if(boards.startsWith("436") || boards.startsWith("468")){
-                StringBuffer sb = new StringBuffer(boards);
-                sb.insert(6,".");
-                boards = sb.toString();
-                names.add(supplyModuleRepository.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
-                continue;
+        else if(decimalNumber.startsWith("469")){
+            BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
+            SupplyModuleRepositoryImpl supplyModuleRepository = new SupplyModuleRepositoryImpl(factory);
+            List<String> names = new ArrayList();
+            Boards board = repositoryBoards.getByDecimalNumber(decimalNumber);
+            String[] InludeBoards = board.getIncludedElements().split("\\*");
+            if (InludeBoards == null) {
+                names.add("Empty");
+                return names;
             }
-            names.add(repositoryBoards.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
+            for (String boards : InludeBoards) {
+                if (boards.startsWith("436") || boards.startsWith("468")) {
+                    StringBuffer sb = new StringBuffer(boards);
+                    sb.insert(6, ".");
+                    boards = sb.toString();
+                    names.add(supplyModuleRepository.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
+                    continue;
+                }
+                names.add(repositoryBoards.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
+            }
+            return names;
         }
-        return names;
+        return null;
     }
+
 
 
 }

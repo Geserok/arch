@@ -4,7 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 
 public class BoardsRepositoryImpl implements Repository {
@@ -36,7 +35,7 @@ public class BoardsRepositoryImpl implements Repository {
             Boards board = session.get(Boards.class, id);
             board.setDecimalNumber(decimalNumber);
             board.setName(name);
-            board.setDesignatedElements(designatedElements);
+            board.setIncludedElements(designatedElements);
             session.update(board);
             tr.commit();
             return board;
@@ -47,7 +46,7 @@ public class BoardsRepositoryImpl implements Repository {
         try (Session session = factory.openSession()) {
             Transaction tr = session.beginTransaction();
             Boards board = session.get(Boards.class, id);
-            board.setDesignatedElements(designatedElements);
+            board.setIncludedElements(designatedElements);
             session.update(board);
             tr.commit();
             return board;
@@ -94,4 +93,5 @@ public class BoardsRepositoryImpl implements Repository {
             return list;
         }
     }
+
 }

@@ -9,7 +9,7 @@ public class FileNotFound {
     public FileNotFound(){
         JFrame exept = new JFrame();
         exept.setLayout(new GridLayout(2,1));
-        exept.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        exept.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         exept.setBounds((screenSize.width-100)/2,(screenSize.height-100)/2,100,100);
 

@@ -2,6 +2,7 @@ package gui;
 
 import openers.FileOpener;
 import org.hibernate.SessionFactory;
+import repository.BoardsRepositoryImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.List;
 
 import static gui.AutoCompletion.createAndShowGUI;
@@ -36,6 +38,7 @@ public class PanelCreator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] split = comboBox.getSelectedItem().toString().split("БЕЖК\\.");
+
                 if(split[1].startsWith("436") || split[1].startsWith("468")){
                     box.removeAll();
                     box.add(dwgButton);
@@ -55,6 +58,10 @@ public class PanelCreator {
                     box.add(schButton);
                     box.add(sbButton);
                     jPanelLeft.add(box,BorderLayout.CENTER);
+                    if(Items.includeElements(factory,split[1].substring(0,split[1].length()-1)).size() >= 1){
+                        jPanelLeft.add(button,BorderLayout.EAST);
+                    }
+                    else {jPanelLeft.remove(button);}
                     jPanelLeft.revalidate();
                 }
             }
