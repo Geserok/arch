@@ -8,10 +8,12 @@
 
         <property name="hibernate.connection.url">
             jdbc:mysql://localhost:3306/arch?serverTimezone=UTC&amp;useSSL=false
+            <!--jdbc:mysql://123.123.0.52:3306/arch?serverTimezone=UTC&amp;useSSL=false-->
         </property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.username">
             root
+            <!--TESLA-PC-->
         </property>
         <property name="hibernate.connection.password">
             root

@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static gui.AutoCompletion.createAndShowGUI;
@@ -187,6 +188,7 @@ public class Items {
         for (SupplyModule sup : modulesAll) {
             names.add(sup.getName() + " (БЕЖК." + sup.getDecimalNumber() + ")");
         }
+        Collections.sort(names);
         return names;
     }
 
@@ -202,18 +204,17 @@ public class Items {
                 return names;
             }
             for (String boards : InludeBoards) {
+                StringBuffer sb = new StringBuffer(boards);
+                sb.insert(6, ".");
+                boards = sb.toString();
                 if (boards.startsWith("436") || boards.startsWith("468")) {
-                    StringBuffer sb = new StringBuffer(boards);
-                    sb.insert(6, ".");
-                    boards = sb.toString();
                     names.add(supplyModuleRepository.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
                     continue;
                 }
                 names.add(repositoryBoards.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
             }
             return names;
-        }
-        else if(decimalNumber.startsWith("469")){
+        } else if(decimalNumber.startsWith("469")){
             BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
             SupplyModuleRepositoryImpl supplyModuleRepository = new SupplyModuleRepositoryImpl(factory);
             List<String> names = new ArrayList();
@@ -224,10 +225,10 @@ public class Items {
                 return names;
             }
             for (String boards : InludeBoards) {
+                StringBuffer sb = new StringBuffer(boards);
+                sb.insert(6, ".");
+                boards = sb.toString();
                 if (boards.startsWith("436") || boards.startsWith("468")) {
-                    StringBuffer sb = new StringBuffer(boards);
-                    sb.insert(6, ".");
-                    boards = sb.toString();
                     names.add(supplyModuleRepository.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
                     continue;
                 }

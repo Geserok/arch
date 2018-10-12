@@ -80,7 +80,7 @@ public class SupplyModuleRepositoryImpl implements Repository {
 
         }
         catch (NoResultException nre){
-            new FileNotFound();
+            FileNotFound.getInstance();
         }
         return supplyModule;
     }

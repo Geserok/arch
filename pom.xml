@@ -26,7 +26,7 @@
                 <version>3.1.0</version>
                 <configuration>
                     <archive>
-                        <manifestFile>F:\PersonalKAV\arch\src\main\java\META-INF\MANIFEST.MF</manifestFile>
+                        <manifestFile>src\main\java\META-INF\MANIFEST.MF</manifestFile>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
