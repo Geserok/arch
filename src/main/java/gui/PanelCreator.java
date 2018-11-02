@@ -1,8 +1,8 @@
 package gui;
 
+import javafx.scene.control.ComboBox;
 import openers.FileOpener;
 import org.hibernate.SessionFactory;
-import repository.BoardsRepositoryImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,19 +11,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import static gui.AutoCompletion.createAndShowGUI;
 
 public class PanelCreator {
 
-    public static JPanel panelCreator(SessionFactory factory, JFrame frame ,List elements){
+    public static JPanel panelCreator(SessionFactory factory, JFrame frame, List elements) {
 
         JPanel jPanelLeft = new JPanel();
         jPanelLeft.setLayout(new BorderLayout());
         Box box = Box.createVerticalBox();
-        box.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        box.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JComboBox comboBox = createAndShowGUI(elements);
         JToggleButton button = new JToggleButton(">>");
@@ -38,73 +38,58 @@ public class PanelCreator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] split = comboBox.getSelectedItem().toString().split("БЕЖК\\.");
-
-                if(split[1].startsWith("436") || split[1].startsWith("468")){
-                    box.removeAll();
-                    box.add(dwgButton);
-                    box.add(pe3Button);
-                    box.add(schButton);
-                    box.add(sbButton);
+                box.removeAll();
+                box.add(dwgButton);
+                box.add(pe3Button);
+                box.add(schButton);
+                box.add(sbButton);
+                if (split[1].startsWith("436") || split[1].startsWith("468")) {
                     box.add(gbButton);
                     box.add(tuButton);
-                    jPanelLeft.add(box,BorderLayout.CENTER);
-                    jPanelLeft.add(button,BorderLayout.EAST);
+                    jPanelLeft.add(box, BorderLayout.CENTER);
+                    jPanelLeft.add(button, BorderLayout.EAST);
                     jPanelLeft.revalidate();
-                }
-                else if(split[1].startsWith("469")){
-                    box.removeAll();
-                    box.add(dwgButton);
-                    box.add(pe3Button);
-                    box.add(schButton);
-                    box.add(sbButton);
-                    jPanelLeft.add(box,BorderLayout.CENTER);
-                    if(Items.includeElements(factory,split[1].substring(0,split[1].length()-1)).size() >= 1){
-                        jPanelLeft.add(button,BorderLayout.EAST);
+                } else if (split[1].startsWith("469")) {
+                    jPanelLeft.add(box, BorderLayout.CENTER);
+                    if (Items.includeElements(factory, split[1].substring(0, split[1].length() - 1)).size() >= 1) {
+                        jPanelLeft.add(button, BorderLayout.EAST);
+                    } else {
+                        jPanelLeft.remove(button);
                     }
-                    else {jPanelLeft.remove(button);}
                     jPanelLeft.revalidate();
                 }
             }
         });
-
         button.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(button.isSelected()){
+                if (button.isSelected()) {
                     button.setText("<<");
-
                     String decNum = comboBox.getSelectedItem().toString().split("БЕЖК\\.")[1];
-//
                     List includeElements = Items.includeElements(factory, decNum.substring(0, decNum.length() - 1));
-                    JPanel pan = PanelCreator.panelCreator(factory,frame,includeElements);
+                    JPanel pan = PanelCreator.panelCreator(factory, frame, includeElements);
                     frame.add(pan);
-                    frame.setSize(frame.getWidth()+300,frame.getHeight());
-                }
-                else {
+                    frame.setSize(frame.getWidth() + 300, frame.getHeight());
+                } else {
                     button.setText(">>");
                     Container parent = button.getParent().getParent();
-                    int componentZOrder = parent.getComponentZOrder(button.getParent())+1;
+                    int componentZOrder = parent.getComponentZOrder(button.getParent()) + 1;
                     int componentCount = parent.getComponentCount();
-            while (componentCount > componentZOrder) {
-                parent.remove(componentZOrder);
-                frame.setSize( frame.getWidth()-300,frame.getHeight());
-                componentCount--;
-            }
-
-
-
+                    while (componentCount > componentZOrder) {
+                        parent.remove(componentZOrder);
+                        frame.setSize(frame.getWidth() - 300, frame.getHeight());
+                        componentCount--;
+                    }
                 }
             }
         });
         dwgButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
+                String decimalNumber = checkDecNum(comboBox);
 
                 try {
-                    FileOpener.dwgOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf("DWG"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -113,12 +98,10 @@ public class PanelCreator {
         gbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
+                String decimalNumber = checkDecNum(comboBox);
 
                 try {
-                    FileOpener.gbOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf("GB"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -127,12 +110,10 @@ public class PanelCreator {
         pe3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
+                String decimalNumber = checkDecNum(comboBox);
 
                 try {
-                    FileOpener.peOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("PE3"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -141,12 +122,10 @@ public class PanelCreator {
         tuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
+                String decimalNumber = checkDecNum(comboBox);
 
                 try {
-                    FileOpener.tuOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("TU"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -155,12 +134,10 @@ public class PanelCreator {
         schButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
+                String decimalNumber = checkDecNum(comboBox);
 
                 try {
-                    FileOpener.schOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SCH"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -169,22 +146,24 @@ public class PanelCreator {
         sbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
+                String decimalNumber = checkDecNum(comboBox);
 
                 try {
-                    FileOpener.sbDwgOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SB"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
         });
 
-        jPanelLeft.add(comboBox,BorderLayout.NORTH);
+        jPanelLeft.add(comboBox, BorderLayout.NORTH);
 
-   return jPanelLeft;
+        return jPanelLeft;
     }
 
+    private static String checkDecNum(JComboBox comboBox) {
+        String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
+        return d.substring(0, d.length() - 1);
+    }
 
 }

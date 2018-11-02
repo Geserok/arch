@@ -84,7 +84,7 @@ public class Items {
                 String decimalNumber = d.substring(0, d.length() - 1);
 
                 try {
-                    FileOpener.dwgOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("DWG"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -98,7 +98,7 @@ public class Items {
                 String decimalNumber = d.substring(0, d.length() - 1);
 
                 try {
-                    FileOpener.gbOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf("GB"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -112,7 +112,7 @@ public class Items {
                 String decimalNumber = d.substring(0, d.length() - 1);
 
                 try {
-                    FileOpener.peOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("PE3"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -126,7 +126,7 @@ public class Items {
                 String decimalNumber = d.substring(0, d.length() - 1);
 
                 try {
-                    FileOpener.tuOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("TU"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -140,7 +140,7 @@ public class Items {
                 String decimalNumber = d.substring(0, d.length() - 1);
 
                 try {
-                    FileOpener.schOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SCH"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -154,7 +154,7 @@ public class Items {
                 String decimalNumber = d.substring(0, d.length() - 1);
 
                 try {
-                    FileOpener.sbDwgOpener(decimalNumber.trim());
+                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SB"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
