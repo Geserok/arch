@@ -1,6 +1,5 @@
 package gui;
 
-import openers.FileOpener;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,14 +11,9 @@ import repository.SupplyModuleRepositoryImpl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static gui.AutoCompletion.createAndShowGUI;
 
 public class Items {
     public static void moduleWindow() {
@@ -31,7 +25,7 @@ public class Items {
         Transaction transaction = session.beginTransaction();
         JFrame frame = new JFrame("First panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(1,6));
+        frame.setLayout(new GridLayout(1, 6));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         JPanel jPanelLeft = new JPanel();
@@ -40,145 +34,18 @@ public class Items {
         jPanelLeft.setLayout(new BorderLayout());
 
         Box box = Box.createVerticalBox();
-        box.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        box.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         Box box1 = Box.createVerticalBox();
-        box1.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        box1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         List elements = Items.elements(factory);
 
-        JPanel pan = PanelCreator.panelCreator(factory,frame,elements);
+        JPanel pan = PanelCreator.panelCreator(factory, frame, elements);
         frame.add(pan);
-        frame.setBounds((screenSize.width-300)/2,(screenSize.height-400)/2,300,400);
+        frame.setBounds((screenSize.width - 300) / 2, (screenSize.height - 400) / 2, 300, 400);
         frame.setVisible(true);
     }
-
-    public static void includeElementWindow(String selectedItem) {
-        Configuration configuration = new Configuration().configure();
-        SessionFactory factory = configuration.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
-        JFrame frame = new JFrame("Include element panel");
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        JPanel jPanel = new JPanel();
-        jPanel.setLayout(new FlowLayout());
-        String decimalNumber = selectedItem.trim();
-        decimalNumber.replaceAll("\\.","");
-        List elements = Items.includeElements(factory, decimalNumber);
-        JComboBox comboBox = createAndShowGUI(elements);
-
-
-        JButton dwgButton = new JButton("Спецификация");
-        JButton pe3Button = new JButton("Перечень элементов");
-        JButton schButton = new JButton("Электрическая принципиальная схема");
-        JButton sbButton = new JButton("Сборочный чертеж");
-        JButton gbButton = new JButton("Габаритный чертеж");
-        JButton tuButton = new JButton("ТУ");
-
-        dwgButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("DWG"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        gbButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf("GB"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        pe3Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("PE3"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        tuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("TU"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        schButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SCH"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        sbButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
-
-                String decimalNumber = d.substring(0, d.length() - 1);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SB"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-
-        frame.add(comboBox, BorderLayout.NORTH);
-        jPanel.add(dwgButton);
-        jPanel.add(sbButton);
-        jPanel.add(gbButton);
-        jPanel.add(pe3Button);
-        jPanel.add(tuButton);
-        jPanel.add(schButton);
-
-
-        frame.add(jPanel, BorderLayout.CENTER);
-
-        frame.setSize(600, 400);
-        frame.setVisible(true);
-        transaction.commit();
-        session.close();
-        factory.close();
-    }
-
 
     public static List elements(SessionFactory factory) {
         BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
@@ -193,7 +60,7 @@ public class Items {
     }
 
     public static List includeElements(SessionFactory factory, String decimalNumber) {
-        if(decimalNumber.startsWith("436") || decimalNumber.startsWith("468")) {
+        if (decimalNumber.startsWith("436") || decimalNumber.startsWith("468")) {
             BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
             SupplyModuleRepositoryImpl supplyModuleRepository = new SupplyModuleRepositoryImpl(factory);
             List<String> names = new ArrayList();
@@ -214,7 +81,7 @@ public class Items {
                 names.add(repositoryBoards.getByDecimalNumber(boards).getName() + " (БЕЖК." + boards + ")");
             }
             return names;
-        } else if(decimalNumber.startsWith("469")){
+        } else if (decimalNumber.startsWith("469")) {
             BoardsRepositoryImpl repositoryBoards = new BoardsRepositoryImpl(factory);
             SupplyModuleRepositoryImpl supplyModuleRepository = new SupplyModuleRepositoryImpl(factory);
             List<String> names = new ArrayList();
@@ -238,8 +105,5 @@ public class Items {
         }
         return null;
     }
-
-
-
 }
 

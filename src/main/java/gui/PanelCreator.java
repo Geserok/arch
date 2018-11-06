@@ -1,7 +1,5 @@
 package gui;
 
-import javafx.scene.control.ComboBox;
-import openers.FileOpener;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -10,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static gui.AutoCompletion.createAndShowGUI;
@@ -83,85 +79,20 @@ public class PanelCreator {
                 }
             }
         });
-        dwgButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String decimalNumber = checkDecNum(comboBox);
 
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf("DWG"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        gbButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String decimalNumber = checkDecNum(comboBox);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf("GB"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        pe3Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String decimalNumber = checkDecNum(comboBox);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("PE3"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        tuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String decimalNumber = checkDecNum(comboBox);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("TU"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        schButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String decimalNumber = checkDecNum(comboBox);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SCH"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        sbButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String decimalNumber = checkDecNum(comboBox);
-
-                try {
-                    FileOpener.getOpen(decimalNumber.trim(), TypesOfDoc.valueOf("SB"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
+        dwgButton.addActionListener(new ButtonActionListener(comboBox,"DWG"));
+        gbButton.addActionListener(new ButtonActionListener(comboBox,"GB"));
+        pe3Button.addActionListener(new ButtonActionListener(comboBox,"PE3"));
+        tuButton.addActionListener(new ButtonActionListener(comboBox,"TU"));
+        schButton.addActionListener(new ButtonActionListener(comboBox,"SCH"));
+        sbButton.addActionListener(new ButtonActionListener(comboBox,"SB"));
 
         jPanelLeft.add(comboBox, BorderLayout.NORTH);
 
         return jPanelLeft;
     }
 
-    private static String checkDecNum(JComboBox comboBox) {
+    static String checkDecNum(JComboBox comboBox) {
         String d = comboBox.getSelectedItem().toString().split("БЕЖК.")[1];
         return d.substring(0, d.length() - 1);
     }
