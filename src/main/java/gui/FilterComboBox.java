@@ -25,13 +25,13 @@ public class FilterComboBox extends JComboBox {
         });
     }
 
-    public void comboFilter(String enteredText) {
+    private void comboFilter(String enteredText) {
         List<String> filterArray = new ArrayList<>();
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).toLowerCase().contains(enteredText.toLowerCase())) {
-                filterArray.add(array.get(i));
+        array.forEach(a -> {
+            if (a.toLowerCase().contains(enteredText.toLowerCase())) {
+                filterArray.add(a);
             }
-        }
+        });
         if (filterArray.size() > 0) {
             this.setModel(new DefaultComboBoxModel(filterArray.toArray()));
             this.setSelectedItem(enteredText);
