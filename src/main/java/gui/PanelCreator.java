@@ -4,13 +4,9 @@ import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
-
-import static gui.AutoCompletion.createAndShowGUI;
 
 public class PanelCreator {
 
@@ -21,7 +17,8 @@ public class PanelCreator {
         Box box = Box.createVerticalBox();
         box.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JComboBox comboBox = createAndShowGUI(elements);
+        //JComboBox comboBox = createAndShowGUI(elements);
+        JComboBox comboBox = new FilterComboBox(elements);
         JToggleButton button = new JToggleButton(">>");
         JButton dwgButton = new JButton("Спецификация");
         JButton pe3Button = new JButton("Перечень элементов");
@@ -30,30 +27,30 @@ public class PanelCreator {
         JButton gbButton = new JButton("Габаритный чертеж");
         JButton tuButton = new JButton("ТУ");
 
-        comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String[] split = comboBox.getSelectedItem().toString().split("БЕЖК\\.");
-                box.removeAll();
-                box.add(dwgButton);
-                box.add(pe3Button);
-                box.add(schButton);
-                box.add(sbButton);
-                if (split[1].startsWith("436") || split[1].startsWith("468")) {
-                    box.add(gbButton);
-                    box.add(tuButton);
-                    jPanelLeft.add(box, BorderLayout.CENTER);
+        comboBox.addActionListener(e -> {
+            String[] split = comboBox.getSelectedItem().toString().split("БЕЖК\\.");
+            if(split.length <= 1){
+                return;
+            }
+            box.removeAll();
+            box.add(dwgButton);
+            box.add(pe3Button);
+            box.add(schButton);
+            box.add(sbButton);
+            if (split[1].startsWith("436") || split[1].startsWith("468")) {
+                box.add(gbButton);
+                box.add(tuButton);
+                jPanelLeft.add(box, BorderLayout.CENTER);
+                jPanelLeft.add(button, BorderLayout.EAST);
+                jPanelLeft.revalidate();
+            } else if (split[1].startsWith("469")) {
+                jPanelLeft.add(box, BorderLayout.CENTER);
+                if (Items.includeElements(factory, split[1].substring(0, split[1].length() - 1)).size() >= 1) {
                     jPanelLeft.add(button, BorderLayout.EAST);
-                    jPanelLeft.revalidate();
-                } else if (split[1].startsWith("469")) {
-                    jPanelLeft.add(box, BorderLayout.CENTER);
-                    if (Items.includeElements(factory, split[1].substring(0, split[1].length() - 1)).size() >= 1) {
-                        jPanelLeft.add(button, BorderLayout.EAST);
-                    } else {
-                        jPanelLeft.remove(button);
-                    }
-                    jPanelLeft.revalidate();
+                } else {
+                    jPanelLeft.remove(button);
                 }
+                jPanelLeft.revalidate();
             }
         });
         button.addItemListener(new ItemListener() {
