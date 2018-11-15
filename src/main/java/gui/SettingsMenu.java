@@ -1,5 +1,7 @@
 package gui;
 
+import openers.FileOpener;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,11 +42,11 @@ public class SettingsMenu {
 
         JTextArea name = new JTextArea("Login:");
         JTextArea password = new JTextArea("Password:");
-        password.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        password.setBorder(BorderFactory.createLineBorder(Color.black));
         JTextArea nameSpace = new JTextArea();
-        nameSpace.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        nameSpace.setBorder(BorderFactory.createLineBorder(Color.black));
         JTextArea passSpace = new JTextArea();
-        passSpace.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        passSpace.setBorder(BorderFactory.createLineBorder(Color.black));
         name.setEditable(false);
         password.setEditable(false);
         nameSpace.setEditable(true);
@@ -55,9 +57,15 @@ public class SettingsMenu {
         set.add(passSpace);
 
         JButton ok = new JButton("ok");
-        ok.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        ok.setBorder(BorderFactory.createLineBorder(Color.black));
+        ok.addActionListener(e -> {
+            FileOpener.setUrl(pathField.getText());
+            settings.dispose();
+        });
+
         JButton cancel = new JButton("cancel");
-        cancel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        cancel.setBorder(BorderFactory.createLineBorder(Color.black));
+        cancel.addActionListener(e -> settings.dispose());
         buttons.add(ok);
         buttons.add(cancel);
 

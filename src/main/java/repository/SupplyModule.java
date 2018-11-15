@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "SupplyModule")
-public class SupplyModule {
+public class SupplyModule implements Product{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "SupplyModule_id")

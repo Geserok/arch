@@ -1,13 +1,6 @@
 package repository;
-//
-//import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-//import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-//import org.apache.poi.ss.usermodel.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,16 +43,19 @@ public class Executor {
         return (ArrayList) decimalNumbers.stream().distinct().collect(Collectors.toList());
     }
 
-    public static List<String> filesExecute(String folderUrl) throws IOException {
+    public static List<String> filesExecute(String folderUrl) {
 
-        List files = Files.walk(Paths.get(folderUrl))
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .collect(Collectors.toList());
+        List files = null;
+        try {
+            files = Files.walk(Paths.get(folderUrl))
+                    .filter(Files::isRegularFile)
+                    .map(Path::toFile)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            System.err.println("Bad url");
+        }
         List<String> decimalNumbers = new ArrayList();
         for (Object file : files) {
-            String[] splitFileName = file.toString().split("\\\\");
-            int length = splitFileName.length;
             String nameWithType = file.toString();
             decimalNumbers.add(nameWithType);
             }

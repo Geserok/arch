@@ -91,4 +91,12 @@ public class FileOpener {
         }
         throw new IllegalArgumentException("Wrong!Illegal argument exception");
     }
+
+    public static String getUrl() {
+        return url;
+    }
+
+    public static void setUrl(String url) {
+        FileOpener.url = url;
+    }
 }

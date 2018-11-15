@@ -17,7 +17,6 @@ public class PanelCreator {
         Box box = Box.createVerticalBox();
         box.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        //JComboBox comboBox = createAndShowGUI(elements);
         JComboBox comboBox = new FilterComboBox(elements);
         JToggleButton button = new JToggleButton(">>");
         JButton dwgButton = new JButton("Спецификация");

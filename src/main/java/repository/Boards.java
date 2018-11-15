@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Boards")
-public class Boards {
+public class Boards implements Product{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
