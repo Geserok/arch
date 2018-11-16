@@ -31,7 +31,7 @@ public class Items {
         menuBar.add(fileMenu);
 
         openItem.addActionListener(e -> {
-            SettingsMenu settingsMenu = new SettingsMenu();
+            SettingsMenu settingsMenu = new SettingsMenu(configuration);
         });
 
         JPanel jPanelLeft = new JPanel();

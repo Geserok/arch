@@ -1,5 +1,7 @@
 package repository;
 
+import openers.FileNotFound;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -46,15 +48,17 @@ public class Executor {
     public static List<String> filesExecute(String folderUrl) {
 
         List files = null;
+        List<String> decimalNumbers = new ArrayList();
         try {
             files = Files.walk(Paths.get(folderUrl))
                     .filter(Files::isRegularFile)
                     .map(Path::toFile)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            System.err.println("Bad url");
+            FileNotFound.getInstance("Bad URL");
+            return decimalNumbers;
         }
-        List<String> decimalNumbers = new ArrayList();
+
         for (Object file : files) {
             String nameWithType = file.toString();
             decimalNumbers.add(nameWithType);
