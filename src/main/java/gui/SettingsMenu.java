@@ -5,9 +5,10 @@ import org.hibernate.cfg.Configuration;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 public class SettingsMenu {
-    public SettingsMenu(Configuration configuration){
+    public SettingsMenu(Configuration configuration) {
         JFrame settings = new JFrame("Settings");
         settings.setLayout(new GridLayout(5,1));
         settings.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -27,10 +28,18 @@ public class SettingsMenu {
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(1,2));
 
+        String propPath = "./properties.txt";
+        String s = null;
+        try(BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(propPath)))) {
+             s = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         JTextField pathName = new JTextField("Путь к папке с архивом:");
+
         pathName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        JTextField pathField = new JTextField("D:\\Архив\\001\\");
+        JTextField pathField = new JTextField(s);
         pathField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JButton pathSearch = new JButton("...");
         pathSearch.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -75,8 +84,15 @@ public class SettingsMenu {
         JButton ok = new JButton("ok");
         ok.setBorder(BorderFactory.createLineBorder(Color.black));
         ok.addActionListener(e -> {
-            FileOpener.setUrl(pathField.getText());
-            settings.dispose();
+            try(BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(propPath)))) {
+                out.write(pathField.getText());
+//                FileOpener.setUrl(pathField.getText());
+                settings.dispose();
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         });
 
         JButton cancel = new JButton("cancel");

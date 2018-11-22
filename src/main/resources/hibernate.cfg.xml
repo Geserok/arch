@@ -7,11 +7,12 @@
     <session-factory>
 
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/arch?serverTimezone=UTC&amp;useSSL=false
-            <!--jdbc:mysql://123.123.0.52:3306/arch?serverTimezone=UTC&amp;useSSL=false-->
+            <!--jdbc:mysql://localhost:3306/arch?serverTimezone=UTC&amp;useSSL=false-->
+            jdbc:mysql://123.123.0.52:3306/arch?serverTimezone=UTC&amp;useSSL=false
         </property>
         <property name="hibernate.connection.ip">
-            localhost:3306
+            <!--localhost:3306-->
+            123.123.0.52:3306
             <!--jdbc:mysql://123.123.0.52:3306/arch?serverTimezone=UTC&amp;useSSL=false-->
         </property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>

@@ -4,17 +4,25 @@ import gui.TypesOfDoc;
 import repository.*;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
 
 public class FileOpener {
-    private static String url = "D:\\Архив\\001\\";
+    //        String url = "D:\\Архив\\001\\";
     //private static String url = "D:\\АРХИВ_27июля_16\\001\\";
     //private static String url = "C:\\javaprojects\\arch\\Архив\\001\\";
 
+    private static String getUrl(){
+        String propPath = "./properties.txt";
+        String url = null;
+        try(BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(propPath)))) {
+            url = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
     /**
      * Method which open files
      *
@@ -22,7 +30,8 @@ public class FileOpener {
      * @param type          type of searching documentation
      * @throws IOException
      */
-    public static void getOpen(String decimalNumber, TypesOfDoc type) throws IOException {
+    public static void getOpen(String decimalNumber, TypesOfDoc type) {
+        String url = getUrl();
         boolean consistFlag = false;
         decimalNumber = decimalNumber.replaceAll("\\.", "");
         Desktop desktop = null;
@@ -91,13 +100,5 @@ public class FileOpener {
                         && !nameOfFile.contains("d33") && !nameOfFile.contains("gh");
         }
         throw new IllegalArgumentException("Wrong!Illegal argument exception");
-    }
-
-    public static String getUrl() {
-        return url;
-    }
-
-    public static void setUrl(String url) {
-        FileOpener.url = url;
     }
 }

@@ -17,10 +17,6 @@ public class ButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String decimalNumber = PanelCreator.checkDecNum(comboBox);
-        try {
-            FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf(type));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+        FileOpener.getOpen(decimalNumber.trim(),TypesOfDoc.valueOf(type));
     }
 }
